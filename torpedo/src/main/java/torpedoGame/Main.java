@@ -38,6 +38,7 @@ public class Main {
 		for(Entry<String, Boolean> entry : gameinfo.getGame().getConnectionStatus()){
 			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
+		System.out.println("\n\t Ain't nobody have time fo' that!!! :'( ");
 
 	}
 
