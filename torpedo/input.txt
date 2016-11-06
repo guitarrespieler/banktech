@@ -1,0 +1,61 @@
+{
+  "game": {
+    "id": 405034534,
+    "round": 0,
+    "scores": {
+      "scores": {
+        "BOT": 0,
+        "Team 1": 0
+      }
+    },
+    "connectionStatus": {
+      "connected": {
+        "BOT": true,
+        "Team 1": false
+      }
+    },
+    "mapConfiguration": {
+      "width": 1700,
+      "height": 800,
+      "islandPositions": [
+        {
+          "x": 400,
+          "y": 400
+        },
+        {
+          "x": 1000,
+          "y": 700
+        },
+        {
+          "x": 1600,
+          "y": 300
+        }
+      ],
+      "teamCount": 1,
+      "submarinesPerTeam": 3,
+      "torpedoDamage": 34,
+      "torpedoHitScore": 100,
+	  "torpedoDestroyScore": 50,
+      "torpedoHitPenalty": 50,
+      "torpedoCooldown": 3,
+      "sonarRange": 100,
+      "extendedSonarRange": 200,
+      "extendedSonarRounds": 10,
+      "extendedSonarCooldown": 20,
+      "torpedoSpeed": 20,
+      "torpedoExplosionRadius": 100,
+      "roundLength": 2000,
+      "islandSize": 100,
+      "submarineSize": 15,
+      "rounds": 300,
+      "maxSteeringPerRound": 10,
+      "maxAccelerationPerRound": 5,
+      "maxSpeed": 15,
+	  "torpedoRange": 10,
+	  "rateLimitedPenalty": 10
+    },
+    "status": "WAITING"
+  },
+  "message": "OK",
+  "code": 0
+}
