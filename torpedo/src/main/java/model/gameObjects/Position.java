@@ -1,5 +1,5 @@
 
-package JSONClasses.SubmarinesJSON;
+package model.gameObjects;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

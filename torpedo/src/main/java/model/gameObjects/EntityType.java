@@ -1,4 +1,4 @@
-package JSONClasses.SubmarinesJSON;
+package model.gameObjects;
 
 import com.google.gson.annotations.SerializedName;
 

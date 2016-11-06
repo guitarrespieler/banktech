@@ -1,0 +1,17 @@
+{
+	"entity":
+		{
+		  "type": "Torpedo",
+		  "id": 635,
+		  "position": {
+		    "x": 200,
+		    "y": 200
+		  },
+		  "owner": {
+		    "name": "Team 1"
+		  },
+		  "velocity": 0,
+		  "angle": 0,
+		  "roundsMoved": 6
+		}
+}
