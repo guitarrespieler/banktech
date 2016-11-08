@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Entity {
+public class EntityDataHolder {
 
     @SerializedName("type")
     @Expose
@@ -163,7 +163,7 @@ public class Entity {
     /**
      * @return true, ha típus és id egyezik; false egyébként.
      */
-    public boolean equals(Entity other){
+    public boolean equals(EntityDataHolder other){
     	if(this.getType().equals(other.getType())){
     		if(this.getId() == other.getId()){
     			return true;

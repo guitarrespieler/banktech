@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import model.gameObjects.Position;
 
 @Generated("org.jsonschema2pojo")
-public class MapConfiguration {
+public class MapConfigDataHolder {
 
     @SerializedName("width")
     @Expose

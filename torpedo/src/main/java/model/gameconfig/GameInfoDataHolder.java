@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Game {
+public class GameInfoDataHolder {
 
     @SerializedName("id")
     @Expose
@@ -33,7 +33,7 @@ public class Game {
     private JsonObject connectionStatus;
     @SerializedName("mapConfiguration")
     @Expose
-    private MapConfiguration mapConfiguration;
+    private MapConfigDataHolder mapConfiguration;
     @SerializedName("status")
     @Expose
     private GameStatus status;
@@ -159,7 +159,7 @@ public class Game {
      * @return
      *     The mapConfiguration
      */
-    public MapConfiguration getMapConfiguration() {
+    public MapConfigDataHolder getMapConfiguration() {
         return mapConfiguration;
     }
 
@@ -168,7 +168,7 @@ public class Game {
      * @param mapConfiguration
      *     The mapConfiguration
      */
-    public void setMapConfiguration(MapConfiguration mapConfiguration) {
+    public void setMapConfiguration(MapConfigDataHolder mapConfiguration) {
         this.mapConfiguration = mapConfiguration;
     }
 

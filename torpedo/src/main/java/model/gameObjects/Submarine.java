@@ -21,7 +21,7 @@ public class Submarine {
 	/**
 	 * Itt tároljuk a tengeralattjárónkhoz tartozó adatokat.
 	 */
-	private Entity dataHolder;
+	private EntityDataHolder dataHolder;
 	
 	private Sonar sonar;
 	
@@ -33,11 +33,11 @@ public class Submarine {
 	 * Kulcs: milyen Entity (torpedó vagy tengeralattjáró)
 	 * Érték: Lista az érzékelt objektumokból
 	 */
-	private Map<EntityType, List<Entity>> scannedEntities;
+	private Map<EntityType, List<EntityDataHolder>> scannedEntities;
 	
 	private String URL_TAG="/game";
 	
-	public Submarine(Entity submarineData,long gameID,Gson gsonObject){
+	public Submarine(EntityDataHolder submarineData,long gameID,Gson gsonObject){
 		dataHolder = submarineData;
 		
 		this.gameID = gameID;
@@ -91,7 +91,7 @@ public class Submarine {
 		return urlParameters;
 	}
 
-	public Map<EntityType, List<Entity>> usePassiveSonar() throws CommException {
+	public Map<EntityType, List<EntityDataHolder>> usePassiveSonar() throws CommException {
 		this.setScannedEntities(sonar.scan());
 		
 		return this.getScannedEntities();
@@ -104,26 +104,26 @@ public class Submarine {
 	/**
 	 * A dataHolder-t a paraméterül kapottra frissíti.
 	 */
-	public void refreshData(Entity submarineData){
+	public void refreshData(EntityDataHolder submarineData){
 		this.dataHolder = submarineData;
 	}
 	
-	public Entity getDataHolder(){
+	public EntityDataHolder getDataHolder(){
 		return dataHolder;
 	}
 
-	public Map<EntityType, List<Entity>> getScannedEntities() {
+	public Map<EntityType, List<EntityDataHolder>> getScannedEntities() {
 		//biztos, ami biztos, kezeljük le itt.
 		if(scannedEntities == null){
-			scannedEntities = new LinkedHashMap<EntityType, List<Entity>>();
-			scannedEntities.put(EntityType.Submarine, new LinkedList<Entity>());
-			scannedEntities.put(EntityType.Torpedo, new LinkedList<Entity>());
+			scannedEntities = new LinkedHashMap<EntityType, List<EntityDataHolder>>();
+			scannedEntities.put(EntityType.Submarine, new LinkedList<EntityDataHolder>());
+			scannedEntities.put(EntityType.Torpedo, new LinkedList<EntityDataHolder>());
 		}			
 		
 		return scannedEntities;
 	}
 
-	private void setScannedEntities(Map<EntityType, List<Entity>> scannedEntities) {
+	private void setScannedEntities(Map<EntityType, List<EntityDataHolder>> scannedEntities) {
 		if(scannedEntities == null)
 			return;
 		if(!scannedEntities.containsKey(EntityType.Submarine)

@@ -3,9 +3,12 @@
  */
 package model.gameObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import communication.CommException;
 import communication.Communication;
@@ -28,24 +31,40 @@ public class OwnSubmarineRefresher {
 	 * @throws CommException 
 	 */
 	public static void refreshTheseSubmarines(long gameID,List<Submarine> submarineList, Gson gsonRef) throws CommException{
+		//url tag elkészítése
 		String URL_TAG = createUrlTag(gameID);
-		
+		//http kérés
 		String jsonStr = Communication.get(URL_TAG);
+		//json parse-olás
+		JsonObject job = gsonRef.fromJson(jsonStr, JsonObject.class);
+		//hibaellenőrzés
+		CommException.communicationcheck(job);
 		
-		SubmarinesJSON job = gsonRef.fromJson(jsonStr, SubmarinesJSON.class);
+		@SuppressWarnings("unchecked")
+		List<EntityDataHolder> newSubmarineData = parseJson(gsonRef, job);
 		
-		int errorCode = job.getCode();		
-		if(errorCode > 0) throw new CommException(errorCode);
 		
-		refreshTheseSubmarines(submarineList, job);
+		refreshTheseSubmarines(submarineList, newSubmarineData);
+	}
+
+	/**
+	 * Listát csinál az új infókból.
+	 */
+	private static List<EntityDataHolder> parseJson(Gson gsonRef, JsonObject job) {
+		JsonElement jes = job.get("submarines");
+		
+		//FIXME not sure about this one...
+		@SuppressWarnings("unchecked")
+		List<EntityDataHolder> newSubmarineData = gsonRef.fromJson(jes, (new ArrayList<EntityDataHolder>()).getClass());
+		return newSubmarineData;
 	}
 
 	/**
 	 * @param submarineList ezeket a hajók dataHoldereit frissíti
-	 * @param job az ebben található értékekkel
+	 * @param newSubmarineData az ebben található értékekkel
 	 */
-	private static void refreshTheseSubmarines(List<Submarine> submarineList, SubmarinesJSON job) {
-		for (Entity newEntityDataHolder : job.getSubmarines()) {
+	private static void refreshTheseSubmarines(List<Submarine> submarineList, List<EntityDataHolder> newSubmarineData) {
+		for (EntityDataHolder newEntityDataHolder : newSubmarineData) {
 			for (Submarine submarine : submarineList) {
 				if(newEntityDataHolder.equals(submarine.getDataHolder())){
 					submarine.refreshData(newEntityDataHolder);

@@ -2,12 +2,14 @@ package model.gameObjects;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import communication.CommException;
@@ -33,7 +35,7 @@ public class Sonar {
 	 * Map kulcsa: entity típusa ( submarine / torpedo )
 	 * érték: a környéken levő(észlelt), adott típusú entity-k listája
 	 */
-	private Map<EntityType,List<Entity>> entities = new LinkedHashMap<EntityType, List<Entity>>();	
+	private Map<EntityType,List<EntityDataHolder>> entities = new LinkedHashMap<EntityType, List<EntityDataHolder>>();	
 	
 	public Sonar(long GameID, long submarineID, Gson gsonObject){
 		this.GameID = GameID;
@@ -46,8 +48,8 @@ public class Sonar {
 		this.gsonRef = gsonObject;
 		
 		//listák inicializálása
-		this.entities.put(EntityType.Submarine, new LinkedList<Entity>());
-		this.entities.put(EntityType.Torpedo, new LinkedList<Entity>());
+		this.entities.put(EntityType.Submarine, new LinkedList<EntityDataHolder>());
+		this.entities.put(EntityType.Torpedo, new LinkedList<EntityDataHolder>());
 	}
 		
 	/**
@@ -60,7 +62,7 @@ public class Sonar {
 	 * az érzékelt Entity objektumokról (torpedókról, tengeralattjárókról)
 	 * @throws CommException 
 	 */
-	public Map<EntityType, List<Entity>> scan() throws CommException {
+	public Map<EntityType, List<EntityDataHolder>> scan() throws CommException {
 		String JsonString = Communication.get(URL_TAG);
 		
 		processJsonStringToSubmarineJSON(JsonString);
@@ -87,20 +89,38 @@ public class Sonar {
 	 * @throws CommException 
 	 */
 	private void processJsonStringToSubmarineJSON(String jsonString) throws CommException {
-		SubmarinesJSON parsedJson = gsonRef.fromJson(jsonString, SubmarinesJSON.class);
+		//parse-olás
+		JsonObject job = gsonRef.fromJson(jsonString, JsonObject.class);
+		//hibaellenőrzés
+		CommException.communicationcheck(job);
 		
-		int errorCode = parsedJson.getCode();
-		if(errorCode > 0) throw new CommException(errorCode);
+		@SuppressWarnings("unchecked")
+		List<EntityDataHolder> entityDataHolderList = parseJson(job);
+
 		
 		//szétszedjük a különböző listákba a különböző típusú entity-ket
-		sortEntities(parsedJson.getEntities());
+		sortEntities(entityDataHolderList);
+	}
+
+	/**
+	 * Listát csinál a beolvasott adatokból.
+	 * FIXME: not sure about that.
+	 */
+	private List<EntityDataHolder> parseJson(JsonObject job) {
+		JsonElement jes = job.get("entities");
+		
+		//FIXME not sure about this one...
+		@SuppressWarnings("unchecked")
+		List<EntityDataHolder> newEntitiesData = gsonRef.fromJson(jes, (new ArrayList<EntityDataHolder>()).getClass());
+		
+		return newEntitiesData;
 	}
 
 	/**
 	 *	Szétosztja a kapott entity-ket a különböző listákba. 
 	 */
-	private void sortEntities(List<Entity> list) {
-		for (Entity entity : list) {
+	private void sortEntities(List<EntityDataHolder> list) {
+		for (EntityDataHolder entity : list) {
 			if(EntityType.Submarine.equals(entity.getType())){
 				entities.get(EntityType.Submarine).add(entity);				
 			}else{

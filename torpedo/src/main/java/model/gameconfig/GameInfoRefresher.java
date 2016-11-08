@@ -19,7 +19,7 @@ public class GameInfoRefresher {
 	 * Frissíti a paraméterül kapott dataHolder objektumot
 	 * @throws CommException 
 	 */
-	public static void refreshGameInfoDataHolder(Game oldDataHolder, Gson gsonRef) throws CommException{
+	public static void refreshGameInfoDataHolder(GameInfoDataHolder oldDataHolder, Gson gsonRef) throws CommException{
 		
 		//Url tag összeállítása
 		String URL_TAG = createUrlTag(oldDataHolder.getId());
@@ -41,10 +41,10 @@ public class GameInfoRefresher {
 	 * A régi dataHoldert az újra cseréli
 	 * @return 
 	 */
-	private static Game createNewDataHolder(Gson gsonRef, JsonObject job) {
+	private static GameInfoDataHolder createNewDataHolder(Gson gsonRef, JsonObject job) {
 		JsonElement jes = job.get("Game");
 		
-		Game newDataHolder = gsonRef.fromJson(jes, Game.class);
+		GameInfoDataHolder newDataHolder = gsonRef.fromJson(jes, GameInfoDataHolder.class);
 		
 		return newDataHolder;
 	}
