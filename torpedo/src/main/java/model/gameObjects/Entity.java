@@ -160,4 +160,15 @@ public class Entity {
         this.roundsMoved = roundsMoved;
     }
 
+    /**
+     * @return true, ha típus és id egyezik; false egyébként.
+     */
+    public boolean equals(Entity other){
+    	if(this.getType().equals(other.getType())){
+    		if(this.getId() == other.getId()){
+    			return true;
+    		}    		
+    	}
+    	return false;    	   	
+    }
 }
