@@ -9,9 +9,11 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.text.html.parser.Entity;
+
 import com.google.gson.Gson;
 
-import JSONClasses.GameInfoJSON.GameInfoJSON;
+import model.gameconfig.GameInfoJSON;
 
 /**
  * @author zsigatibor
@@ -33,18 +35,24 @@ public class Main {
 		
 		Gson gson = new Gson();
 		
-		GameInfoJSON gameinfo = gson.fromJson(jsonstr, GameInfoJSON.class);
+//		GameInfoJSON gameinfo = gson.fromJson(jsonstr, GameInfoJSON.class);
+//		
+//		for(Entry<String, Boolean> entry : gameinfo.getGame().getConnectionStatus()){
+//			System.out.println(entry.getKey() + ": " + entry.getValue());
+//		}
 		
-		for(Entry<String, Boolean> entry : gameinfo.getGame().getConnectionStatus()){
-			System.out.println(entry.getKey() + ": " + entry.getValue());
-		}
+			
+		Entity obj = gson.fromJson(jsonstr, Entity.class);
+		
+		
+		
 		System.out.println("\n\t Ain't nobody have time fo' that!!! :'( ");
 
 	}
 
 private static String readIn() throws FileNotFoundException {
 		
-		BufferedReader buf = new BufferedReader(new FileReader(new File("../torpedo/input.txt")));
+		BufferedReader buf = new BufferedReader(new FileReader(new File("../torpedo/input2.txt")));
 		
 		String line = "";
 		StringBuilder sb = new StringBuilder();

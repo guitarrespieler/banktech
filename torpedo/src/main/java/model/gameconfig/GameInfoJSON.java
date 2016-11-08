@@ -1,5 +1,5 @@
 
-package JSONClasses.GameInfoJSON;
+package model.gameconfig;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

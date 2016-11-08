@@ -1,4 +1,4 @@
-package JSONClasses.GameInfoJSON;
+package model.gameconfig;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class Game {
     private MapConfiguration mapConfiguration;
     @SerializedName("status")
     @Expose
-    private String status;
+    private GameStatus status;
 
     /**
      * 
@@ -177,7 +177,7 @@ public class Game {
      * @return
      *     The status
      */
-    public String getStatus() {
+    public GameStatus getStatus() {
         return status;
     }
 
@@ -186,7 +186,7 @@ public class Game {
      * @param status
      *     The status
      */
-    public void setStatus(String status) {
+    public void setStatus(GameStatus status) {
         this.status = status;
     }
 

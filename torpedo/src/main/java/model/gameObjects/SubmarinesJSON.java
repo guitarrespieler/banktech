@@ -1,5 +1,5 @@
 
-package JSONClasses.SubmarinesJSON;
+package model.gameObjects;
 
 import java.util.ArrayList;
 import java.util.List;
