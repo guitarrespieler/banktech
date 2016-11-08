@@ -91,8 +91,10 @@ public class Submarine {
 		return urlParameters;
 	}
 
-	public void usePassiveSonar() throws CommException {
+	public Map<EntityType, List<Entity>> usePassiveSonar() throws CommException {
 		this.setScannedEntities(sonar.scan());
+		
+		return this.getScannedEntities();
 	}
 
 	public void activateSonar() throws CommException {
