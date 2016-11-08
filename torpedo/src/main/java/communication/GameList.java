@@ -19,11 +19,10 @@ public class GameList {
 	 * @throws NumberFormatException 
 	 */
 	public List<Long> getRunningGameIds() throws NumberFormatException, CommException {
-		Communication comm = new Communication();
-		String response = comm.get(URL_TAG);
+		String response = Communication.get(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
-		communicationcheck(object);
+		CommException.communicationcheck(object);
 		String IDs = object.get("game").toString();
 		StringTokenizer st = new StringTokenizer(IDs, ",");
 		ArrayList<Long> returnlist = new ArrayList<Long>();
@@ -44,7 +43,7 @@ public class GameList {
 		String response = Communication.get(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
-		communicationcheck(object);
+		CommException.communicationcheck(object);
 		String IDs = object.get("game").toString();
 		StringTokenizer st = new StringTokenizer(IDs, ",");
 		ArrayList<Long> lostofIDs = new ArrayList<Long>();
@@ -56,11 +55,6 @@ public class GameList {
 				return true;
 		}
 		return false;
-	}
-	
-	private void communicationcheck(JsonObject object) throws NumberFormatException, CommException{
-		if(object.get("code").toString() != "0")
-			throw new CommException(Integer.parseInt(object.get("code").toString()));
 	}
 
 }

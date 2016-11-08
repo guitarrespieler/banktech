@@ -109,4 +109,6 @@ public class Communication {
 		response = httpclient.execute(httppost);
 		return response;
 	}
+	
+	
 }
