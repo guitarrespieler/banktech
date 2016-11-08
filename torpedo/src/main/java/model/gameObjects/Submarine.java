@@ -5,9 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.message.BasicNameValuePair;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import communication.CommException;
+import communication.Communication;
+
+import java.util.ArrayList;
+import org.apache.http.NameValuePair;
 
 public class Submarine {
 	
@@ -28,6 +35,8 @@ public class Submarine {
 	 */
 	private Map<EntityType, List<Entity>> scannedEntities;
 	
+	private String URL_TAG="/game";
+	
 	public Submarine(Entity submarineData,long gameID,Gson gsonObject){
 		dataHolder = submarineData;
 		
@@ -42,10 +51,21 @@ public class Submarine {
 	 * A tengeralattjárót mozgathatjuk vele. Paraméterül megadhatjuk neki az elfordulás szögét és a gyorsítás / lassítás mértékét ( tehát nem a kívánt sebességre állítjuk, hanem növeljük vagy csökkentjük azt!)
 	 * @param speed
 	 * @param turnAngle
+	 * @throws CommException 
 	 */
-	public void move(double speed, double turnAngle) {
-		// TODO - implement Submarine.move
-		throw new UnsupportedOperationException();
+	public void move(Double speed, Double turnAngle) throws CommException {
+		List<NameValuePair> urlParameters = speedparameterlistparse(speed, turnAngle);
+		String response = Communication.postwithparams(URL_TAG+gameID+"/submarine"+ dataHolder.getId()+"/move",urlParameters);
+		Gson parser = new Gson();
+		JsonObject object = parser.fromJson(response,JsonObject.class);
+		CommException.communicationcheck(object);
+	}
+
+	private List<NameValuePair> speedparameterlistparse(Double speed, Double turnAngle) {
+		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		urlParameters.add(new BasicNameValuePair("speed", speed.toString()));
+		urlParameters.add(new BasicNameValuePair("turn", turnAngle.toString()));
+		return urlParameters;
 	}
 
 	/**
@@ -55,10 +75,20 @@ public class Submarine {
 	 * Irányt, szám érték megadásával állíthatunk:  
 	 * angle: 90.0 (Körök végi kiértékeléskor, a megadott irányba torpedót indít)  
 	 * @param shootAngle
+	 * @throws CommException 
 	 */
-	public void shoot(double shootAngle) {
-		// TODO - implement Submarine.shoot
-		throw new UnsupportedOperationException();
+	public void shoot(double shootAngle) throws CommException {
+		List<NameValuePair> urlParameters = shootparameterlistparse(shootAngle);
+		String response = Communication.postwithparams(URL_TAG+gameID+"/submarine"+ dataHolder.getId()+"/move",urlParameters);
+		Gson parser = new Gson();
+		JsonObject object = parser.fromJson(response,JsonObject.class);
+		CommException.communicationcheck(object);
+	}
+	
+	private List<NameValuePair> shootparameterlistparse(Double turnAngle) {
+		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		urlParameters.add(new BasicNameValuePair("angle", turnAngle.toString() ));
+		return urlParameters;
 	}
 
 	public void usePassiveSonar() throws CommException {
