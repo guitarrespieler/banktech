@@ -6,6 +6,8 @@ package communication;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 /**
  * @author tibor
  *
@@ -45,5 +47,10 @@ public class CommException extends Exception {
 	 */
 	public int getErrorCode(){
 		return errorCode;
+	}
+	
+	public static void communicationcheck(JsonObject object) throws NumberFormatException, CommException{
+		if(object.get("code").toString() != "0")
+			throw new CommException(Integer.parseInt(object.get("code").toString()));
 	}
 }

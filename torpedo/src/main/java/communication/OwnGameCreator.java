@@ -29,14 +29,11 @@ public class OwnGameCreator {
 		String response = Communication.post(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
-		communicationcheck(object);
+		CommException.communicationcheck(object);
 		ID = Long.parseLong(object.get("id").toString());
 	}
 	
-	private void communicationcheck(JsonObject object) throws NumberFormatException, CommException{
-		if(object.get("code").toString() != "0")
-			throw new CommException(Integer.parseInt(object.get("code").toString()));
-	}
+	
 	
 	public long getID() {
 		return this.ID;
