@@ -16,13 +16,13 @@ public class OwnGameCreator {
 	 * Ezen a címen érjük el a szerver oldalt.
 	 */
 	private static String URL_TAG = "game";
-	Communication communication;
 
 	/**
 	 * Saját játékot hoz létre. Az új játék ID-ját elmenti.
 	 */
-	public void createOwnGame(Communication communication) {
-		String response = communication.post("http://server-adress:port/jc16-srv/game");
+	public void createOwnGame() {
+		Communication comm = new Communication();
+		String response = comm.post("http://server-adress:port/jc16-srv/game");
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		ID = Long.parseLong(object.get("id").toString());
