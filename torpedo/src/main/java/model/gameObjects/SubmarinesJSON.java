@@ -18,7 +18,7 @@ public class SubmarinesJSON {
     private String message;
     @SerializedName("code")
     @Expose
-    private long code;
+    private int code;
 
     /**
      * 
@@ -61,7 +61,7 @@ public class SubmarinesJSON {
      * @return
      *     The code
      */
-    public long getCode() {
+    public int getCode() {
         return code;
     }
 
@@ -70,7 +70,7 @@ public class SubmarinesJSON {
      * @param code
      *     The code
      */
-    public void setCode(long code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
