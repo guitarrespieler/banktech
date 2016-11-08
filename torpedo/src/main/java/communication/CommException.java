@@ -14,13 +14,18 @@ import com.google.gson.JsonObject;
  */
 public class CommException extends Exception {
 	
+	private static final long serialVersionUID = 1L;
+
 	private int errorCode = 0;
 	
 	/**
 	 * Ebből a map-ből kinyerhető, hogy mely hibakódhoz milyen 
 	 * hibaüzenet tartozik.
 	 */
-	public static Map<Integer,ErrorCodes> errors= new LinkedHashMap<Integer,ErrorCodes>(){{
+	public static Map<Integer,ErrorCodes> errors= new LinkedHashMap<Integer,ErrorCodes>(){
+		private static final long serialVersionUID = 1L;
+
+	{
 		put(1,ErrorCodes.team_not_invited);
 		put(2,ErrorCodes.already_running_game);
 		put(3,ErrorCodes.gameID_not_exist);
