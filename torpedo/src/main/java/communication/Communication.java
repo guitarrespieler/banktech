@@ -54,7 +54,6 @@ public class Communication {
 	    }
 	    rd.close();
 	    return response.toString();
-		throw new UnsupportedOperationException();
 	}
 
 	/**

@@ -1,4 +1,6 @@
 package communication;
+import java.io.IOException;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 /**
@@ -21,8 +23,9 @@ public class OwnGameCreator {
 	 * Saját játékot hoz létre. Az új játék ID-ját elmenti.
 	 * @throws CommException 
 	 * @throws NumberFormatException 
+	 * @throws IOException 
 	 */
-	public void createOwnGame() throws NumberFormatException, CommException {
+	public void createOwnGame() throws NumberFormatException, CommException, IOException {
 		String response = Communication.post(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
