@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
