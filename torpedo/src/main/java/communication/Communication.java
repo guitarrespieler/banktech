@@ -50,6 +50,11 @@ public class Communication {
 		return apicall(urlTag,httptype.POST);
 	    
 	}
+	
+	public static String postwithparams(String urlTag,List urlParameters) {
+		return apicallwithparams(urlTag,httptype.POST,urlParameters);
+	    
+	}
 	/**
 	 * Get kérést intéz a szerver felé. A paraméterül kapott URL TAG-et hozzáfűzi az url-hez. Visszatérési értékként megadja a szerver válaszát.
 	 * @param urlTag
@@ -94,6 +99,45 @@ public class Communication {
 		}
 		return strbuilder.toString();
 	}
+	
+	private static String apicallwithparams(String urlTag, httptype type,List urlParameters) {
+		BufferedReader rd = null;
+		StringBuilder strbuilder = null;
+		try {
+			String url = mainURL + urlTag;
+			
+			HttpClient httpclient = HttpClients.createDefault();
+			HttpResponse response = null;
+			if(httptype.POST.equals(type)){
+				response = initpost(url, httpclient);
+			}else{
+				response = initget(url, httpclient);
+			}
+			response.setEntity(new UrlEncodedFormEntity(urlParameters));
+			HttpEntity entity = response.getEntity();
+
+			InputStream is = entity.getContent();
+			rd = new BufferedReader(new InputStreamReader(is));
+			strbuilder = new StringBuilder(); // or StringBuffer if Java version
+												// 5+
+			String line;
+			while ((line = rd.readLine()) != null) {
+				strbuilder.append(line);
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rd.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return strbuilder.toString();
+	}
+	
 	private static HttpResponse initget(String url, HttpClient httpclient) throws IOException, ClientProtocolException {
 		HttpResponse response;
 		HttpGet httpget = new HttpGet(url);
