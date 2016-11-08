@@ -15,18 +15,24 @@ public class OwnGameCreator {
 	/**
 	 * Ezen a címen érjük el a szerver oldalt.
 	 */
-	private static String URL_TAG = "game";
+	private static String URL_TAG = "/game";
 
 	/**
 	 * Saját játékot hoz létre. Az új játék ID-ját elmenti.
+	 * @throws CommException 
+	 * @throws NumberFormatException 
 	 */
-	public void createOwnGame() {
-		Communication comm = new Communication();
-		String response = comm.post("http://server-adress:port/jc16-srv/game");
+	public void createOwnGame() throws NumberFormatException, CommException {
+		String response = Communication.post(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
+		communicationcheck(object);
 		ID = Long.parseLong(object.get("id").toString());
-		throw new UnsupportedOperationException();
+	}
+	
+	private void communicationcheck(JsonObject object) throws NumberFormatException, CommException{
+		if(object.get("code").toString() != "0")
+			throw new CommException(Integer.parseInt(object.get("code").toString()));
 	}
 	
 	public long getID() {

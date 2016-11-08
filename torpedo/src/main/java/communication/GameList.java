@@ -8,13 +8,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class GameList {
+	
+	String URL_TAG = "/game";
 
 	/**
 	 * Lekéri a játékok listáját amibe a csapat csatlakozhat, és még nem csatlakozott, és visszaadja azt visszatérési értékként.
+	 * @throws CommException 
+	 * @throws NumberFormatException 
 	 */
-	public List<Long> getRunningGameIds() {
+	public List<Long> getRunningGameIds() throws NumberFormatException, CommException {
 		Communication comm = new Communication();
-		String response = comm.get("http://195.228.45.100:8080/jc16-srv/game");
+		String response = comm.get(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		communicationcheck(object);
@@ -31,10 +35,11 @@ public class GameList {
 	/**
 	 * Megadja, hogy a paraméterül kapott ID-jű játék létezik-e. True, ha létezik, false, ha nem.
 	 * @param gameID
+	 * @throws CommException 
+	 * @throws NumberFormatException 
 	 */
-	public boolean isExistingGameID(long gameID) {
-		Communication comm = new Communication();
-		String response = comm.get("http://195.228.45.100:8080/jc16-srv/game");
+	public boolean isExistingGameID(long gameID) throws NumberFormatException, CommException {
+		String response = Communication.get(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		communicationcheck(object);
@@ -51,11 +56,9 @@ public class GameList {
 		return false;
 	}
 	
-	private void communicationcheck(JsonObject object){
-		//TODO Ha Tibi megcsinálta a hiba osztályt ezeket a kommenteket ki kell törölni.
-		//Addig azért van bent hogy ne legyen hiba a pushban.
-		//if(object.get("code").toString() != "0")
-			//throw new UnsupportedOperationException(Long.parseLong(object.get("code").toString()));
+	private void communicationcheck(JsonObject object) throws NumberFormatException, CommException{
+		if(object.get("code").toString() != "0")
+			throw new CommException(Integer.parseInt(object.get("code").toString()));
 	}
 
 }
