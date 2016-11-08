@@ -49,7 +49,7 @@ public class CommException extends Exception {
 		return errorCode;
 	}
 	
-	public static void communicationcheck(JsonObject object) throws NumberFormatException, CommException{
+	public static void communicationcheck(JsonObject object) throws CommException{
 		if(object.get("code").toString() != "0")
 			throw new CommException(Integer.parseInt(object.get("code").toString()));
 	}

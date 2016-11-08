@@ -69,13 +69,15 @@ public class Sonar {
 	/**
 	 * Bekapcsolja az aktív szonárt, ezáltal pár kör erejéig megnövekszik a szonár hatósugara.
 	 *  Mellékhatása, hogy a hajónkat "az aktív szonár hatósugarával megegyező távolságról" észlelni tudja a többi hajó.
+	 * @throws CommException 
+	 * @throws NumberFormatException 
 	 */
-	public void activate(){
+	public void activate() throws CommException{
 		String JsonString = Communication.post(URL_TAG);
 		
 		JsonObject job = gsonRef.fromJson(JsonString, JsonObject.class);
 		
-		//hibakezelés
+		CommException.communicationcheck(job);
 		
 	}
 	/**
