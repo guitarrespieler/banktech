@@ -64,5 +64,8 @@ public class Submarine {
 	public void refreshData(Entity submarineData){
 		this.dataHolder = submarineData;
 	}
-
+	
+	public Entity getDataHolder(){
+		return dataHolder;
+	}
 }

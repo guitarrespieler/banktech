@@ -10,12 +10,28 @@ import com.google.gson.annotations.SerializedName;
 @Generated("org.jsonschema2pojo")
 public class SubmarinesJSON {
 
-    @SerializedName("entities")
+	/**
+	 * Amikor a szonár kérdezi le a környezet adatait,
+	 * akkor a tengeralattjárók és torpedók értékei 
+	 * ebbe a listába mentődnek.
+	 */
+	@SerializedName("entities")
     @Expose
     private List<Entity> entities = new ArrayList<Entity>();
+	
+	/**
+	 * Amikor a saját tengeralattjáróink értékét kérdezzük le
+	 * (Submarines http kérés), akkor ebbe a listába fognak mentődni
+	 * az adatok.
+	 */
+	@SerializedName("submarines")
+    @Expose
+    private List<Entity> submarines = new ArrayList<Entity>();
+	
     @SerializedName("message")
     @Expose
     private String message;
+    
     @SerializedName("code")
     @Expose
     private int code;
@@ -73,5 +89,13 @@ public class SubmarinesJSON {
     public void setCode(int code) {
         this.code = code;
     }
+
+	public List<Entity> getSubmarines() {
+		return submarines;
+	}
+
+	public void setSubmarines(List<Entity> submarines) {
+		this.submarines = submarines;
+	}
 
 }
