@@ -1,5 +1,10 @@
 package model.gameObjects;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import com.google.gson.Gson;
 
 import communication.CommException;
@@ -16,6 +21,12 @@ public class Submarine {
 	private Gson gsonRef;
 
 	private long gameID;
+
+	/**
+	 * Kulcs: milyen Entity (torpedó vagy tengeralattjáró)
+	 * Érték: Lista az érzékelt objektumokból
+	 */
+	private Map<EntityType, List<Entity>> scannedEntities;
 	
 	public Submarine(Entity submarineData,long gameID,Gson gsonObject){
 		dataHolder = submarineData;
@@ -51,7 +62,7 @@ public class Submarine {
 	}
 
 	public void usePassiveSonar() throws CommException {
-		sonar.scan();
+		this.setScannedEntities(sonar.scan());
 	}
 
 	public void activateSonar() throws CommException {
@@ -67,5 +78,29 @@ public class Submarine {
 	
 	public Entity getDataHolder(){
 		return dataHolder;
+	}
+
+	public Map<EntityType, List<Entity>> getScannedEntities() {
+		//biztos, ami biztos, kezeljük le itt.
+		if(scannedEntities == null){
+			scannedEntities = new LinkedHashMap<EntityType, List<Entity>>();
+			scannedEntities.put(EntityType.Submarine, new LinkedList<Entity>());
+			scannedEntities.put(EntityType.Torpedo, new LinkedList<Entity>());
+		}			
+		
+		return scannedEntities;
+	}
+
+	private void setScannedEntities(Map<EntityType, List<Entity>> scannedEntities) {
+		if(scannedEntities == null)
+			return;
+		if(!scannedEntities.containsKey(EntityType.Submarine)
+				|| !scannedEntities.containsKey(EntityType.Torpedo))
+			return;
+		if(scannedEntities.get(EntityType.Submarine) == null 
+				|| scannedEntities.get(EntityType.Torpedo) == null)
+			return;
+		
+		this.scannedEntities = scannedEntities;
 	}
 }

@@ -56,14 +56,16 @@ public class Sonar {
 	 *   a submarines vagy torpedos listába elmenti.
 	 * 
 	 * Hiba esetén előre definiált hibakóddal exception-t dob.
+	 * @return egy map, amelyben Entity típusonként van lista
+	 * az érzékelt Entity objektumokról (torpedókról, tengeralattjárókról)
 	 * @throws CommException 
 	 */
-	public void scan() throws CommException {
+	public Map<EntityType, List<Entity>> scan() throws CommException {
 		String JsonString = Communication.get(URL_TAG);
 		
 		processJsonStringToSubmarineJSON(JsonString);
-		// TODO - implement Sonar.scan
-		throw new UnsupportedOperationException();
+		
+		return entities;
 	}
 	
 	/**
@@ -77,22 +79,8 @@ public class Sonar {
 		
 		JsonObject job = gsonRef.fromJson(JsonString, JsonObject.class);
 		
-		CommException.communicationcheck(job);
-		
-	}
-	/**
-	 * Visszaadja az érzékelt tengeralattjárók listáját.
-	 */
-	public List<Entity> getNearbySubmarines() {
-		return entities.get(EntityType.Submarine);
-	}
-
-	/**
-	 * Visszaadja az érzékelt torpedók listáját.
-	 */
-	public List<Entity> getNearbyTorpedos() {
-		return entities.get(EntityType.Torpedo);
-	}
+		CommException.communicationcheck(job);		
+	}	
 	
 	/**
 	 * feldolgozza a paraméterül kapott Json stringet.
