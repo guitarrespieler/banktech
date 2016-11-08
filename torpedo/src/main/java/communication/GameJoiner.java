@@ -16,7 +16,7 @@ public class GameJoiner {
 	 * @throws NumberFormatException 
 	 */
 	public void joinToThisGame(long gameID) throws NumberFormatException, CommException {
-		String response = Communication.get(URL_TAG+gameID);
+		String response = Communication.post(URL_TAG+gameID);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		CommException.communicationcheck(object);
