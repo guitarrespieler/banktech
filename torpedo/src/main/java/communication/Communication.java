@@ -17,7 +17,7 @@ public class Communication {
 	 * A paraméterül kapott TAG-et hozzáfűzi az URL címhez és erre a címre posztol. Visszatérési értékként adja a szerver válaszát.
 	 * @param url_tag Ezt a TAG-et fűzi hozzá az URL címhez.
 	 */
-	public String post(String url_tag) {
+	public static String post(String url_tag) {
 		// TODO - implement Communication.post
 		throw new UnsupportedOperationException();
 	}
@@ -26,7 +26,7 @@ public class Communication {
 	 * Get kérést intéz a szerver felé. A paraméterül kapott URL TAG-et hozzáfűzi az url-hez. Visszatérési értékként megadja a szerver válaszát.
 	 * @param urlTag
 	 */
-	public String get(String urlTag) {
+	public static String get(String urlTag) {
 		// TODO - implement Communication.get
 		throw new UnsupportedOperationException();
 	}
