@@ -11,14 +11,14 @@ import com.google.gson.JsonObject;
 
 public class GameList {
 	
-	String URL_TAG = "/game";
+	private static final String URL_TAG = "/game";
 
 	/**
 	 * Lekéri a játékok listáját amibe a csapat csatlakozhat, és még nem csatlakozott, és visszaadja azt visszatérési értékként.
 	 * @throws CommException 
 	 * @throws NumberFormatException 
 	 */
-	public List<Long> getRunningGameIds() throws NumberFormatException, CommException {
+	public static List<Long> getRunningGameIds() throws NumberFormatException, CommException {
 		String response = Communication.get(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
@@ -39,7 +39,7 @@ public class GameList {
 	 * @throws CommException 
 	 * @throws NumberFormatException 
 	 */
-	public boolean isExistingGameID(long gameID) throws NumberFormatException, CommException {
+	public static boolean isExistingGameID(long gameID) throws NumberFormatException, CommException {
 		String response = Communication.get(URL_TAG);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import communication.CommException;
 import communication.GameJoiner;
+import communication.GameList;
 import communication.OwnGameCreator;
 import model.gameObjects.OwnSubmarineRefresher;
 import model.gameObjects.Submarine;
@@ -28,7 +29,17 @@ public class ModelTest {
 			System.out.println("Create Lefutott");
 			System.out.println("Kapott ID:"+creator.getID());
 			GameJoiner joiner = new GameJoiner();
-			joiner.joinToThisGame(creator.getID());
+			try{
+				joiner.joinToThisGame(creator.getID());
+			}catch (CommException e) {
+				if(e.getErrorCode() == 2){
+					List<Long> gamelist = GameList.getRunningGameIds();
+					gamelist.remove(creator.getID());
+					joiner.joinToThisGame(gamelist.get(0));
+				}
+					
+			}
+			
 			System.out.println("Join Lefutott");
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);

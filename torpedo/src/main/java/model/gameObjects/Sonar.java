@@ -1,6 +1,7 @@
 package model.gameObjects;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,11 +12,13 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import communication.CommException;
 import communication.Communication;
 import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.EntityType;
+import model.gameObjects.entities.SubmarineDataHolder;
 
 public class Sonar {
 	
@@ -111,9 +114,9 @@ public class Sonar {
 	private List<EntityDataHolder> parseJson(JsonObject job) {
 		JsonElement jes = job.get("entities");
 		
-		//FIXME not sure about this one...
-		@SuppressWarnings("unchecked")
-		List<EntityDataHolder> newEntitiesData = gsonRef.fromJson(jes, (new ArrayList<EntityDataHolder>()).getClass());
+		Type listType = new TypeToken<List<EntityDataHolder>>() {}.getType();
+
+		List<EntityDataHolder> newEntitiesData = gsonRef.fromJson(jes,listType);
 		
 		return newEntitiesData;
 	}

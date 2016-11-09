@@ -3,6 +3,7 @@
  */
 package model.gameObjects;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import communication.CommException;
 import communication.Communication;
@@ -54,10 +56,9 @@ public class OwnSubmarineRefresher {
 	private static List<SubmarineDataHolder> parseJson(Gson gsonRef, JsonObject job) {
 		JsonElement jes = job.get("submarines");
 		
-		JsonArray jar = jes.getAsJsonArray();
-		//FIXME not sure about this one...
-		@SuppressWarnings("unchecked")
-		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jar, (new ArrayList<SubmarineDataHolder>()).getClass());
+		Type listType = new TypeToken<List<SubmarineDataHolder>>() {}.getType();
+
+		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jes,listType);
 		return newSubmarineData;
 	}
 
