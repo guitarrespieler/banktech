@@ -34,7 +34,7 @@ public class Communication {
 	/**
 	 * Ezen az URL címen érjük el a szervert. Ehhez fűzzük hozzá az URL TAG-et a post és get metódusokban.
 	 */
-	private static String mainURL = "http://195.228.45.100:8080/jc16-srv/";
+	public static String mainURL;
 	/**
 	 * Ezt a tokent kell minden kéréskor a header-ben megadni.
 	 */

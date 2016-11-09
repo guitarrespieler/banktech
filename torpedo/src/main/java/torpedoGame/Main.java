@@ -9,6 +9,8 @@ import javax.swing.text.html.parser.Entity;
 
 import com.google.gson.Gson;
 
+import communication.Communication;
+
 /**
  * @author zsigatibor
  *
@@ -18,7 +20,9 @@ public class Main {
 	/**
 	 * @param args
 	 */
+	static String urlpart;
 	public static void main(String[] args) {
+		Communication.mainURL="http://"+args[0]+"/jc16-srv/";
 		String jsonstr = null;
 		try {
 			jsonstr = readIn();

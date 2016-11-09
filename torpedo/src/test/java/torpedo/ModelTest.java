@@ -26,12 +26,21 @@ public class ModelTest {
 		try {
 			Gson gsonobject = new Gson();
 			creator.createOwnGame();
+			System.out.println(creator.getID());
 			creator.createOwnGame();
+			System.out.println(creator.getID());
 			creator.createOwnGame();
+			System.out.println(creator.getID());
+			GameList list = new GameList();
+			//GameJoiner joiner = new GameJoiner();
+			joiner.joinToThisGame(creator.getID());
+			List<Long> runninggames = list.getRunningGameIds();
+			for (int i = 0; i < runninggames.size(); i++) {
+				System.out.println("futó jatek " + runninggames.get(i));
+			}
 			System.out.println("Create Lefutott");
 			System.out.println("Kapott ID:"+creator.getID());			
 			
-			//System.out.println("Join Lefutott");
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
 			Submarine submarine = new Submarine(creator.getID(),gsonobject,submarinesdata.get(0));

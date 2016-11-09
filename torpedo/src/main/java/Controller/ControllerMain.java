@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import communication.CommException;
+import communication.Communication;
 import communication.GameJoiner;
 import communication.GameList;
 import communication.OwnGameCreator;
@@ -36,6 +37,7 @@ public class ControllerMain {
 	}
 
 	public static void main(String[] args) {
+		Communication.mainURL="http://"+args[0]+"/jc16-srv/";
 		ControllerMain cM = new ControllerMain();
 		try {
 			cM.startGame();

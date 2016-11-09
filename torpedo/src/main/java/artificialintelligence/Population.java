@@ -1,9 +1,18 @@
 package artificialintelligence;
 
-public class Population{
+import java.util.ArrayList;
+import java.util.Arrays;
 
-	public Population() {
-		// TODO Auto-generated constructor stub
+public class Population{
+	
+	ArrayList<Entity> population = null;
+
+	public Population(int populationsize) {
+		ArrayList<Entity> population = new ArrayList<Entity>(populationsize);
+	}
+	
+	public void sortPopulationDesceding(){
+		Arrays.sort(population);
 	}
 
 }
