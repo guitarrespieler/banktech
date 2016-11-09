@@ -28,7 +28,7 @@ public class ModelTest {
 			System.out.println("Create Lefutott");
 			System.out.println("Kapott ID:"+creator.getID());
 			GameJoiner joiner = new GameJoiner();
-			joiner.joinToThisGame(creator.getID());
+			//joiner.joinToThisGame(creator.getID());
 			System.out.println("Join Lefutott");
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
