@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -15,7 +17,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 /**
@@ -45,7 +53,7 @@ public class Communication {
 	    
 	}
 	
-	public static String postwithparams(String urlTag,List urlParameters) {
+	public static String postwithparams(String urlTag,JsonObject urlParameters) {
 		return apicallwithparams(urlTag,httptype.POST,urlParameters);
 	    
 	}
@@ -94,7 +102,7 @@ public class Communication {
 		return strbuilder.toString();
 	}
 	
-	private static String apicallwithparams(String urlTag, httptype type,List urlParameters) {
+	private static String apicallwithparams(String urlTag, httptype type,JsonObject urlParameters) {
 		BufferedReader rd = null;
 		StringBuilder strbuilder = null;
 		try {
@@ -152,12 +160,34 @@ public class Communication {
 	}
 	
 
-	private static HttpResponse initpostWithparms(String url, HttpClient httpclient, List<NameValuePair> urlParameters)
+	private static HttpResponse initpostWithparms(String url, HttpClient httpclient, JsonObject urlParameters)
 			throws IOException, ClientProtocolException {
 		HttpResponse response=null;
 		HttpPost httppost = new HttpPost(url);
 		httppost.addHeader("TEAMTOKEN", TEAM_TOKEN);
-		httppost.setEntity(new UrlEncodedFormEntity(urlParameters));
+		
+		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+		 postParameters.add(new BasicNameValuePair("speed", "1.0"));
+		 postParameters.add(new BasicNameValuePair("turn", "-3.0"));
+		httppost.setEntity(new UrlEncodedFormEntity(postParameters));
+		
+		
+		
+		
+		
+		
+		 //passes the results to a string builder/entity
+	    StringEntity se = new StringEntity(urlParameters.toString());
+
+	    //sets the post request as the resulting string
+	    httppost.setEntity(se);
+	    //sets a request header so the page receving the request
+	    //will know what to do with it
+	    httppost.setHeader("Accept", "application/json");
+	    httppost.setHeader("Content-type", "application/json");
+
+		
+		
 		response = httpclient.execute(httppost);
 		return response;
 	}
