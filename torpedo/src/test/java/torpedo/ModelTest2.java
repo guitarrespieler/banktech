@@ -38,23 +38,13 @@ public class ModelTest2 {
 			System.out.println("Create Lefutott");
 			System.out.println("Kapott ID:" + creator.getID());
 			GameJoiner joiner = new GameJoiner();
-			try {
-				joiner.joinToThisGame(creator.getID());
-			} catch (CommException e) {
-				if (e.getErrorCode() == 2) {
-					List<Long> gamelist = GameList.getRunningGameIds();
-					gamelist.remove(creator.getID());
-					joiner.joinToThisGame(gamelist.get(0));
-				}
 
-			}
-
-			System.out.println("Join Lefutott");
+			//System.out.println("Join Lefutott");
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
 			Submarine submarine = new Submarine(creator.getID(), gsonobject, submarinesdata.get(0));
 			System.out.println("A submarine létrehozása sikeres");
-			//submarine.move(1.0, 10.0);
+			submarine.move(1.0, 10.0);
 			System.out.println("A submarine mozgása sikeres");
 			//submarine.shoot(10.0);
 			System.out.println("A submarine shoot sikeres");

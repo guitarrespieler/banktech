@@ -26,20 +26,12 @@ public class ModelTest {
 		try {
 			Gson gsonobject = new Gson();
 			creator.createOwnGame();
+			creator.createOwnGame();
+			creator.createOwnGame();
 			System.out.println("Create Lefutott");
-			System.out.println("Kapott ID:"+creator.getID());
-			GameJoiner joiner = new GameJoiner();
-			try{
-				joiner.joinToThisGame(creator.getID());
-			}catch (CommException e) {
-				if(e.getErrorCode() == 2){
-					List<Long> gamelist = GameList.getRunningGameIds();
-					gamelist.remove(creator.getID());
-					joiner.joinToThisGame(gamelist.get(0));
-				}		
-			}
+			System.out.println("Kapott ID:"+creator.getID());			
 			
-			System.out.println("Join Lefutott");
+			//System.out.println("Join Lefutott");
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
 			Submarine submarine = new Submarine(creator.getID(),gsonobject,submarinesdata.get(0));
