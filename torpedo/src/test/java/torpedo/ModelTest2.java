@@ -40,11 +40,14 @@ public class ModelTest2 {
 			System.out.println("Kapott ID:" + creator.getID());
 			GameJoiner joiner = new GameJoiner();
 			GameInfoDataHolder info = GameInfoDataHolder.refreshGameInfoDataHolder(creator.getID(), gsonobject);
+			
 			if(GameList.getRunningGameIds().contains((creator.getID())))
-					{
+			{
 						joiner.joinToThisGame(creator.getID());
 						System.out.println("Join Lefutott");
-					}
+			}
+			
+			
 			
 			
 			
@@ -54,8 +57,8 @@ public class ModelTest2 {
 			Submarine submarine = new Submarine(creator.getID(), gsonobject, submarinesdata.get(0));
 			System.out.println("A submarine létrehozása sikeres");
 			
-//			submarine.move(1.0, 10.0);
-//			System.out.println("A submarine mozgása sikeres");
+			submarine.move(1.0, 10.0);
+			System.out.println("A submarine mozgása sikeres");
 //			//submarine.shoot(10.0);
 //			System.out.println("A submarine shoot sikeres");
 //			
