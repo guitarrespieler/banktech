@@ -61,15 +61,17 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;		
+		setBackground(BackgroundColor);
+		
+		Graphics2D g2d = (Graphics2D) g;	
+		super.paintComponent(g2d);
 		g2d.scale(xScale, yScale);	//skálázni kell, mert nem fér bele a HD ablakméretbe
 		g2d.translate(xTranslate, yTranslate);//el kell tolni, mert rossz irányban van
 		
 		if(!isPreferredSizeSet())
 			setSize(getPreferredSize());
 	
-		setBackground(BackgroundColor);
-		super.paintComponent(g2d);
+		
 		
 		paintIslands(g2d);
 		
