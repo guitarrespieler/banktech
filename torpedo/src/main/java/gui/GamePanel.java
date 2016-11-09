@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,14 +60,14 @@ public class GamePanel extends JPanel {
 		repaint();
 	}
 	
-	public void paint(Graphics g){
+	public void paintComponent(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;		
 		g2d.scale(xScale, yScale);	//skálázni kell, mert nem fér bele a HD ablakméretbe
 		g2d.translate(xTranslate, yTranslate);//el kell tolni, mert rossz irányban van
 		
 		if(!isPreferredSizeSet())
 			setSize(getPreferredSize());
-		
+	
 		setBackground(BackgroundColor);
 		super.paintComponent(g2d);
 		
@@ -117,7 +118,7 @@ public class GamePanel extends JPanel {
 	private void drawThisCircle(Position pos, double size,Color color, Graphics2D g2d,String str) {
 		double xPos = pos.getX();
 		double yPos = pos.getY();
-		
+
 		//eltoljuk a középpontba
 		xPos = xPos-(size/2);
 		yPos = yPos-(size/2);
@@ -147,7 +148,6 @@ public class GamePanel extends JPanel {
 	public void setOwnSubmarineList(List<SubmarineDataHolder> list){
 		ownSubmarines = list;
 		invalidate();
-		repaint();
 	}
 
 	public void addOtherEntities(List<EntityDataHolder> entities) {

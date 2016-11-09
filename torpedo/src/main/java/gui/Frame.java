@@ -56,8 +56,7 @@ public class Frame extends JFrame {
 		gamePanel = new GamePanel(gamePanelDimension,mapconfig);
 		
 		add(gamePanel);
-		
-		
+
 		setVisible(true);
 		
 	}
