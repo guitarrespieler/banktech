@@ -1,18 +1,13 @@
 package Controller;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.http.entity.EntityTemplate;
 
 import model.gameObjects.Position;
 import model.gameObjects.Submarine;
 import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.EntityType;
-import model.gameconfig.GameInfoDataHolder;
-import model.gameconfig.MapConfigDataHolder;
 
 /**
  * Lövési logikáért felelős osztály

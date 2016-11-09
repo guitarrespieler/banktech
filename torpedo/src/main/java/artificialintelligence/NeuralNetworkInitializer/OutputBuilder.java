@@ -1,10 +1,10 @@
-package solutionOne;
+package artificialintelligence.NeuralNetworkInitializer;
 
 import java.util.LinkedList;
 
-import model.Connection;
-import model.NeuralNetwork;
-import model.Neuron;
+import artificialintelligence.neuralnetwork.Connection;
+import artificialintelligence.neuralnetwork.NeuralNetwork;
+import artificialintelligence.neuralnetwork.Neuron;
 
 /**
  * A megfelelő kimenet előállításáért felelős osztály.

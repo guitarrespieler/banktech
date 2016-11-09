@@ -14,14 +14,12 @@ import communication.GameList;
 import communication.OwnGameCreator;
 import gui.Frame;
 import model.gameObjects.OwnSubmarineRefresher;
-import model.gameObjects.Position;
 import model.gameObjects.Submarine;
 import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.EntityType;
 import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.GameInfoDataHolder;
 import model.gameconfig.GameStatus;
-import model.gameconfig.MapConfigDataHolder;
 
 public class ControllerMain {
 
@@ -58,7 +56,7 @@ public class ControllerMain {
 						cM.refreshAll();
 						lastRound = cM.gameInfo.getRound();
 						
-						cM.useSonars();
+						cM.refreshSonarDataForSubmarines();
 						
 						cM.gameFrame.paintTheseEnemies(cM.subMarinesSonarData);
 						
@@ -88,19 +86,6 @@ public class ControllerMain {
 		}
 
 		System.out.println("Vege");
-
-	}
-
-	private void useSonars() {
-		for (Submarine submarine : ownSubmarines) {
-			try {
-				Map<EntityType, List<EntityDataHolder>> sonarData = submarine.usePassiveSonar();
-				subMarinesSonarData.put(submarine, sonarData);
-
-			} catch (CommException e) {
-				e.printStackTrace();
-			}
-		}
 
 	}
 
@@ -177,13 +162,13 @@ public class ControllerMain {
 	}
 
 	private void refreshSonarDataForSubmarines() throws CommException {
-		for (Submarine submarine : ownSubmarines) {
+		for(int i = 0; i < ownSubmarines.size(); i++){
+			Submarine submarine = ownSubmarines.get(i);
 			if (submarine.getDataHolder().getSonarCooldown() == 0) {
 				if (subMarinesSonarData.containsKey(submarine))
 					subMarinesSonarData.get(submarine).clear();
 				subMarinesSonarData.put(submarine, submarine.usePassiveSonar());
 			}
-
 		}
 	}
 
