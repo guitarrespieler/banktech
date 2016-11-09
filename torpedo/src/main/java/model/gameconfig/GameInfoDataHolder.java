@@ -2,22 +2,23 @@ package model.gameconfig;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.net.ssl.HandshakeCompletedEvent;
 
 import java.util.Set;
 
-import com.google.gson.JsonArray;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import communication.CommException;
+import communication.Communication;
+
 public class GameInfoDataHolder {
+	
+	private static final String PRE_urltag = "/game/";
 
     @SerializedName("id")
     @Expose
@@ -38,6 +39,49 @@ public class GameInfoDataHolder {
     @Expose
     private GameStatus status;
 
+	/**
+	 * Frissíti a paraméterül kapott dataHolder objektumot
+	 * @throws CommException 
+	 */
+	public static void refreshGameInfoDataHolder(GameInfoDataHolder oldDataHolder, Gson gsonRef) throws CommException{
+		
+		//Url tag összeállítása
+		String URL_TAG = createUrlTag(oldDataHolder.getId());
+		
+		//http kérés
+		String jsonStr = Communication.get(URL_TAG);
+		
+		//parse-olás
+		JsonObject job = gsonRef.fromJson(jsonStr, JsonObject.class);
+		
+		//hibaellenőrzés
+		CommException.communicationcheck(job);
+		
+		//frissítés
+		oldDataHolder = createNewDataHolder(gsonRef, job);		
+	}
+
+	/**
+	 * A régi dataHoldert az újra cseréli
+	 * @return 
+	 */
+	private static GameInfoDataHolder createNewDataHolder(Gson gsonRef, JsonObject job) {
+		JsonElement jes = job.get("Game");
+		
+		GameInfoDataHolder newDataHolder = gsonRef.fromJson(jes, GameInfoDataHolder.class);
+		
+		return newDataHolder;
+	}
+
+	/**
+	 * Előállítja a http kéréshez szükséges url taget
+	 * @param id
+	 * @return
+	 */
+	private static String createUrlTag(int gameId) {
+		return PRE_urltag + gameId;
+	}
+    
     /**
      * 
      * @return

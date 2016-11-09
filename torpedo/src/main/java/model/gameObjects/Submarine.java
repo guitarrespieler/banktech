@@ -12,6 +12,9 @@ import com.google.gson.JsonObject;
 
 import communication.CommException;
 import communication.Communication;
+import model.gameObjects.entities.SubmarineDataHolder;
+import model.gameObjects.entities.EntityDataHolder;
+import model.gameObjects.entities.EntityType;
 
 import java.util.ArrayList;
 import org.apache.http.NameValuePair;
@@ -21,7 +24,7 @@ public class Submarine {
 	/**
 	 * Itt tároljuk a tengeralattjárónkhoz tartozó adatokat.
 	 */
-	private EntityDataHolder dataHolder;
+	private SubmarineDataHolder dataHolder = null;
 	
 	private Sonar sonar;
 	
@@ -37,9 +40,7 @@ public class Submarine {
 	
 	private String URL_TAG="/game";
 	
-	public Submarine(EntityDataHolder submarineData,long gameID,Gson gsonObject){
-		dataHolder = submarineData;
-		
+	public Submarine(long gameID,Gson gsonObject){		
 		this.gameID = gameID;
 		
 		gsonRef = gsonObject;
@@ -104,11 +105,11 @@ public class Submarine {
 	/**
 	 * A dataHolder-t a paraméterül kapottra frissíti.
 	 */
-	public void refreshData(EntityDataHolder submarineData){
+	public void refreshData(SubmarineDataHolder submarineData){
 		this.dataHolder = submarineData;
 	}
 	
-	public EntityDataHolder getDataHolder(){
+	public SubmarineDataHolder getDataHolder(){
 		return dataHolder;
 	}
 

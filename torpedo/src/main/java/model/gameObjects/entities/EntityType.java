@@ -1,4 +1,4 @@
-package model.gameObjects;
+package model.gameObjects.entities;
 
 import com.google.gson.annotations.SerializedName;
 

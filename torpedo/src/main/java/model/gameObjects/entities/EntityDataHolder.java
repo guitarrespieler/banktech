@@ -1,11 +1,11 @@
 
-package model.gameObjects;
+package model.gameObjects.entities;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Generated("org.jsonschema2pojo")
+import model.gameObjects.Position;
+
 public class EntityDataHolder {
 
     @SerializedName("type")
@@ -28,12 +28,30 @@ public class EntityDataHolder {
     private double angle;
     
     /**
-     * Torpedóknál érdekes.
+     * Torpedóknak van ilyenje
      */
     @SerializedName("roundsMoved")
     @Expose
     private long roundsMoved;
 
+    /**
+     * 
+     * @return
+     *     The roundsMoved
+     */
+    public long getRoundsMoved() {
+        return roundsMoved;
+    }
+
+    /**
+     * 
+     * @param roundsMoved
+     *     The roundsMoved
+     */
+    public void setRoundsMoved(long roundsMoved) {
+        this.roundsMoved = roundsMoved;
+    }
+    
     /**
      * 
      * @return
@@ -142,23 +160,7 @@ public class EntityDataHolder {
         this.angle = angle;
     }
 
-    /**
-     * 
-     * @return
-     *     The roundsMoved
-     */
-    public long getRoundsMoved() {
-        return roundsMoved;
-    }
-
-    /**
-     * 
-     * @param roundsMoved
-     *     The roundsMoved
-     */
-    public void setRoundsMoved(long roundsMoved) {
-        this.roundsMoved = roundsMoved;
-    }
+    
 
     /**
      * @return true, ha típus és id egyezik; false egyébként.

@@ -14,6 +14,8 @@ import com.google.gson.JsonObject;
 
 import communication.CommException;
 import communication.Communication;
+import model.gameObjects.entities.EntityDataHolder;
+import model.gameObjects.entities.EntityType;
 
 public class Sonar {
 	
@@ -42,7 +44,7 @@ public class Sonar {
 		this.submarineID = submarineID;
 		
 		//URL TAG összeállítása
-		this.URL_TAG = "/game/" + this.GameID +
+		this.URL_TAG = "game/" + this.GameID +
 					"/submarine/" + this.submarineID + "/sonar";
 		
 		this.gsonRef = gsonObject;
