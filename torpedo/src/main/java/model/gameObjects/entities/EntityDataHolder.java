@@ -19,7 +19,7 @@ public class EntityDataHolder {
     private Position position;
     @SerializedName("owner")
     @Expose
-    private String owner;
+    private Owner owner;
     @SerializedName("velocity")
     @Expose
     private double velocity;
@@ -112,7 +112,7 @@ public class EntityDataHolder {
      *     The owner
      */
     public String getOwner() {
-        return owner;
+        return owner.getName();
     }
 
     /**
@@ -120,7 +120,7 @@ public class EntityDataHolder {
      * @param owner
      *     The owner
      */
-    public void setOwner(String owner) {
+    public void setOwner(Owner owner) {
         this.owner = owner;
     }
 
@@ -172,5 +172,32 @@ public class EntityDataHolder {
     		}    		
     	}
     	return false;    	   	
+    }
+    
+    private class Owner{
+    	@SerializedName("name")
+    	@Expose
+    	private String name;
+
+    	/**
+    	* 
+    	* @return
+    	* The name
+    	*/
+    	public String getName() {
+    	return name;
+    	}
+
+    	/**
+    	* 
+    	* @param name
+    	* The name
+    	*/
+    	public void setName(String name) {
+    	this.name = name;
+    	}
+
+    	
+    	
     }
 }
