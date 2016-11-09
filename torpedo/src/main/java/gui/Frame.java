@@ -32,7 +32,7 @@ public class Frame extends JFrame {
 	private MapConfigDataHolder mapconfig;
 	private GamePanel gamePanel;
 	
-	public Frame(MapConfigDataHolder mapconfigdata, List<SubmarineDataHolder> submarines) {
+	public Frame(MapConfigDataHolder mapconfigdata) {
 		super();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,17 +43,17 @@ public class Frame extends JFrame {
 		
 		setTitle("Torpedo Game");
 		
-		init(mapconfigdata,submarines);
+		init(mapconfigdata);
 	}
 
-	private void init(MapConfigDataHolder mapconfigdata, List<SubmarineDataHolder>submarines) {
+	private void init(MapConfigDataHolder mapconfigdata) {
 		setLocationRelativeTo(null);
 		
 		mapconfig = mapconfigdata;
 		gamePanelDimension = new Dimension(mapconfig.getWidth(), mapconfig.getHeight());
 		
 		
-		gamePanel = new GamePanel(gamePanelDimension,mapconfig, submarines);
+		gamePanel = new GamePanel(gamePanelDimension,mapconfig);
 		
 		add(gamePanel);
 		
@@ -63,9 +63,11 @@ public class Frame extends JFrame {
 	}
 	
 	public void paintTheseEnemies(List<EntityDataHolder> entities){
-		for (EntityDataHolder entityDataHolder : entities) {
-			gamePanel.drawThisEntity(entityDataHolder);
-		}
+		gamePanel.addOtherEntities(entities);
+	}
+	
+	public void paintOwnSubmarines(List<SubmarineDataHolder>subs){
+		gamePanel.setOwnSubmarineList(subs);
 	}
 	
 	public static void main(String[] args) {
@@ -93,7 +95,9 @@ public class Frame extends JFrame {
 		
 		List<SubmarineDataHolder> submarines = makeSomeSubmarineFromJson();
 		
-		new Frame(mc,submarines);
+		Frame f = new Frame(mc);
+		
+		f.paintOwnSubmarines(submarines);
 	}
 
 	private static List<SubmarineDataHolder> makeSomeSubmarineFromJson() {

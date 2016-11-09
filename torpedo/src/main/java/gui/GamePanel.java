@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -36,13 +37,21 @@ public class GamePanel extends JPanel {
 
 	private MapConfigDataHolder mapData;
 	
-	List<SubmarineDataHolder> ownSubmarines;
+	/**
+	 * Saját tengeralattjárókat mentjük ide
+	 */
+	List<SubmarineDataHolder> ownSubmarines = new LinkedList<SubmarineDataHolder>();
+	
+	/**
+	 * szonárral felderített elemek
+	 */
+	private List<EntityDataHolder> otherEntities = new LinkedList<EntityDataHolder>();
 	
 	
-	public GamePanel(Dimension windowDim,MapConfigDataHolder dataholder,List<SubmarineDataHolder> submarines) {		
+	public GamePanel(Dimension windowDim,MapConfigDataHolder dataholder) {		
 		super();
 		mapData = dataholder;
-		ownSubmarines = submarines;
+		
 		setPreferredSize(windowDim);
 		
 		setOpaque(true);//átlátszatlan lesz így
@@ -55,15 +64,20 @@ public class GamePanel extends JPanel {
 		g2d.scale(xScale, yScale);	//skálázni kell, mert nem fér bele a HD ablakméretbe
 		g2d.translate(xTranslate, yTranslate);//el kell tolni, mert rossz irányban van
 		
-		setBackground(BackgroundColor);
-		
-		g2d.setFont(new Font("TimesRoman", Font.BOLD, 25)); 
-		
 		if(!isPreferredSizeSet())
 			setSize(getPreferredSize());
 		
+		setBackground(BackgroundColor);
+		super.paintComponent(g2d);
+		
 		paintIslands(g2d);
-		paintSubmarines(g2d);
+		
+		for (EntityDataHolder entityDataHolder : otherEntities) {
+			drawThisEntity(entityDataHolder);
+		}
+		for (SubmarineDataHolder submarine : ownSubmarines) {
+			drawThisEntity(submarine);
+		}
 	}
 
 	private void paintIslands(Graphics2D g2d) {
@@ -76,25 +90,25 @@ public class GamePanel extends JPanel {
 		}		
 	}
 	
-	private void paintSubmarines(Graphics2D g2d) {		
-		for (SubmarineDataHolder submarine : ownSubmarines) {
-			int submarineSize = (int) Math.round(mapData.getSubmarineSize());
-			drawThisCircle(submarine.getPosition(), submarineSize, ownSubmarineColor,g2d,"Mienk");
-		}		
-	}
-	
 	private void drawThisEntity(EntityDataHolder entity) {
 		switch (entity.getType()) {
 		case Torpedo:
-			drawThisCircle(entity.getPosition(), mapData.getTorpedoExplosionRadius(), torpedoColor,(Graphics2D)getGraphics(),entity.getOwner());
+			drawThisCircle(entity.getPosition(), mapData.getTorpedoExplosionRadius(),
+					torpedoColor,(Graphics2D)getGraphics(),entity.getOwner());
 			break;
 		case Submarine:
-			drawThisCircle(entity.getPosition(), mapData.getSubmarineSize(), enemySubmarineColor,(Graphics2D)getGraphics(),entity.getOwner());
+			Color color = null;
+			if(entity.getOwner().equals("HowHaveTimeForLife")){
+				color = ownSubmarineColor;
+			}else{
+				color = enemySubmarineColor;
+			}			
+			drawThisCircle(entity.getPosition(), mapData.getSubmarineSize(), 
+					color,(Graphics2D)getGraphics(),entity.getOwner());			
 			break;
 		default:
 			break;
-		}
-		
+		}		
 	}
 
 	/**
@@ -121,8 +135,10 @@ public class GamePanel extends JPanel {
 			g2d.scale(1, -1);
 			g2d.translate(0,-2*yPos);
 			g2d.setColor(Color.BLACK);
+			g2d.setFont(new Font("TimesRoman", Font.BOLD, 25)); 
+
+			g2d.drawString(str, x, y);	
 			
-			g2d.drawString(str, x, y);			
 			g2d.setTransform(orig);
 		}
 			
@@ -130,6 +146,13 @@ public class GamePanel extends JPanel {
 
 	public void setOwnSubmarineList(List<SubmarineDataHolder> list){
 		ownSubmarines = list;
+		invalidate();
+		repaint();
+	}
+
+	public void addOtherEntities(List<EntityDataHolder> entities) {
+		this.otherEntities = entities;
+		repaint();
 	}
 	
 }
