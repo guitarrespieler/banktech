@@ -19,6 +19,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import model.gameObjects.Position;
+import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.MapConfigDataHolder;
 import torpedoGame.Main;
@@ -32,7 +33,7 @@ public class Frame extends JFrame {
 	private GamePanel gamePanel;
 	
 	public Frame(MapConfigDataHolder mapconfigdata, List<SubmarineDataHolder> submarines) {
-		
+		super();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(prefferedDim);
@@ -61,6 +62,12 @@ public class Frame extends JFrame {
 		
 	}
 	
+	public void paintTheseEnemies(List<EntityDataHolder> entities){
+		for (EntityDataHolder entityDataHolder : entities) {
+			gamePanel.drawThisEntity(entityDataHolder);
+		}
+	}
+	
 	public static void main(String[] args) {
 		MapConfigDataHolder mc = new MapConfigDataHolder();
 		{//most beállítom kézzel, hogy ki tudjam próbálni
@@ -78,8 +85,10 @@ public class Frame extends JFrame {
 				setY(800.0);
 			}});
 			
-			mc.setIslandSize(150);
+			mc.setIslandSize(500);
 			mc.setPositions(posList);
+			
+			mc.setSubmarineSize(100);
 		}
 		
 		List<SubmarineDataHolder> submarines = makeSomeSubmarineFromJson();

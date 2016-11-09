@@ -30,8 +30,7 @@ public class OwnSubmarineRefresher {
 	private static final String POST_urltag = "submarine/";
 	
 	/**
-	 * Lekéri a saját tengeralattjáróink értékeit
-	 * és frissíti is azok adatait.
+	 * Lekéri a saját tengeralattjáróink értékeit és visszatérési értékként megadja az újat.
 	 * @param submarineList a frissítendő tengeralattjárók listája
 	 * @throws CommException 
 	 */

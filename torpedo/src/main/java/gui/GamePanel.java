@@ -2,19 +2,30 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.List;
 
 import javax.swing.JPanel;
 
 import model.gameObjects.Position;
+import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.MapConfigDataHolder;
 
 public class GamePanel extends JPanel {
 
 	private static final Color BackgroundColor = new Color(207,236,242);
+	private static final Color IslandColor = new Color(101,184,88);
+	private static final Color ownSubmarineColor = new Color(255,193,37);
+	
+	private static final Color enemySubmarineColor = new Color(255,0,255);
+	
+	private static final Color torpedoColor = new Color(255,0,0);
+	
+	
 
 	private static final long serialVersionUID = 298144871000160168L;
 	
@@ -29,9 +40,12 @@ public class GamePanel extends JPanel {
 	
 	
 	public GamePanel(Dimension windowDim,MapConfigDataHolder dataholder,List<SubmarineDataHolder> submarines) {		
+		super();
 		mapData = dataholder;
 		ownSubmarines = submarines;
 		setPreferredSize(windowDim);
+		
+		setOpaque(true);//átlátszatlan lesz így
 		
 		repaint();
 	}
@@ -41,13 +55,15 @@ public class GamePanel extends JPanel {
 		g2d.scale(xScale, yScale);	//skálázni kell, mert nem fér bele a HD ablakméretbe
 		g2d.translate(xTranslate, yTranslate);//el kell tolni, mert rossz irányban van
 		
-		g2d.setBackground(BackgroundColor);
+		setBackground(BackgroundColor);
+		
+		g2d.setFont(new Font("TimesRoman", Font.BOLD, 25)); 
 		
 		if(!isPreferredSizeSet())
 			setSize(getPreferredSize());
 		
 		paintIslands(g2d);
-		
+		paintSubmarines(g2d);
 	}
 
 	private void paintIslands(Graphics2D g2d) {
@@ -56,24 +72,61 @@ public class GamePanel extends JPanel {
 		int islandSize = (int) Math.round(mapData.getIslandSize());
 		
 		for (Position position : positions) {
-			drawThisCircle(position, islandSize, Color.GREEN,g2d);
+			drawThisCircle(position, islandSize, IslandColor,g2d,"");
+		}		
+	}
+	
+	private void paintSubmarines(Graphics2D g2d) {		
+		for (SubmarineDataHolder submarine : ownSubmarines) {
+			int submarineSize = (int) Math.round(mapData.getSubmarineSize());
+			drawThisCircle(submarine.getPosition(), submarineSize, ownSubmarineColor,g2d,"Mienk");
+		}		
+	}
+	
+	public void drawThisEntity(EntityDataHolder entity) {
+		switch (entity.getType()) {
+		case Torpedo:
+			drawThisCircle(entity.getPosition(), mapData.getTorpedoExplosionRadius(), torpedoColor,(Graphics2D)getGraphics(),entity.getOwner());
+			break;
+		case Submarine:
+			drawThisCircle(entity.getPosition(), mapData.getSubmarineSize(), enemySubmarineColor,(Graphics2D)getGraphics(),entity.getOwner());
+			break;
+		default:
+			break;
 		}
 		
 	}
 
 	/**
-	 * Adott pozícióra rajzol egy kört.
+	 * Adott pozícióra(középpont) rajzol egy kört + kiírja a paraméterül kapott Stringet
 	 */
-	private void drawThisCircle(Position pos, int size,Color color, Graphics2D g2d) {
-		int xPos = (int) Math.round(pos.getX());
-		int yPos = (int) Math.round(pos.getY());
+	private void drawThisCircle(Position pos, double size,Color color, Graphics2D g2d,String str) {
+		double xPos = pos.getX();
+		double yPos = pos.getY();
 		
+		//eltoljuk a középpontba
 		xPos = xPos-(size/2);
 		yPos = yPos-(size/2);
 		
-		g2d.fillOval(xPos, yPos, size, size);
+		int x = (int) Math.round(xPos);
+		int y = (int) Math.round(yPos);
 		
+		int siz = (int) Math.round(size);
 		
+		g2d.setColor(color);
+		g2d.fillOval(x, y, siz, siz);
+		
+		if(!(str == null || str.isEmpty())){
+			AffineTransform orig = g2d.getTransform();
+			g2d.scale(1, -1);
+			g2d.translate(0,-2*yPos);
+			g2d.setColor(Color.BLACK);
+			
+			g2d.drawString(str, x, y);			
+			g2d.setTransform(orig);
+		}
+			
 	}
 
+	
 }
