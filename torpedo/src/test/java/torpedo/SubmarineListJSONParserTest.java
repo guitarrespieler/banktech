@@ -43,9 +43,7 @@ public class SubmarineListJSONParserTest {
 		JsonElement jes = job.get("submarines");
 		
 		Type listType = new TypeToken<List<SubmarineDataHolder>>() {}.getType();
-		
-		// FIXME not sure about this one...
-		@SuppressWarnings("unchecked")
+
 		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jes,listType);
 		return newSubmarineData;
 	}
