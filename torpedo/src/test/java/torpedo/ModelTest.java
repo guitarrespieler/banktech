@@ -5,6 +5,7 @@ import java.io.IOException;
 import communication.CommException;
 import communication.GameJoiner;
 import communication.OwnGameCreator;
+import model.gameObjects.Submarine;
 
 /**
  * Modell tesztelésére létrehozott osztály
@@ -22,7 +23,7 @@ public class ModelTest {
 			GameJoiner joiner = new GameJoiner();
 			joiner.joinToThisGame(creator.getID());
 			System.out.println("Join Lefutott");
-			
+			Submarine submarine = new Submarine(submarineData, creator.getID(), gsonObject)
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

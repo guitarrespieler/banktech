@@ -13,7 +13,7 @@ import communication.Communication;
  */
 public class GameInfoRefresher {
 	
-	private static final String PRE_urltag = "/game/";
+	private static final String PRE_urltag = "game/";
 	
 	/**
 	 * Frissíti a paraméterül kapott dataHolder objektumot

@@ -21,8 +21,8 @@ import communication.Communication;
  */
 public class OwnSubmarineRefresher {
 
-	private static final String PRE_urltag = "/game/";
-	private static final String POST_urltag = "/submarine";
+	private static final String PRE_urltag = "game/";
+	private static final String POST_urltag = "submarine/";
 	
 	/**
 	 * Lekéri a saját tengeralattjáróink értékeit

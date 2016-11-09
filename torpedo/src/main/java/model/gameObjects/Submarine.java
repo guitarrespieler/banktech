@@ -35,7 +35,7 @@ public class Submarine {
 	 */
 	private Map<EntityType, List<EntityDataHolder>> scannedEntities;
 	
-	private String URL_TAG="/game";
+	private String URL_TAG="game/";
 	
 	public Submarine(EntityDataHolder submarineData,long gameID,Gson gsonObject){
 		dataHolder = submarineData;
