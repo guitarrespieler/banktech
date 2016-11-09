@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -101,14 +102,15 @@ public class Communication {
 			
 			HttpClient httpclient = HttpClients.createDefault();
 			HttpResponse response = null;
+			
 			if(httptype.POST.equals(type)){
-				response = initpost(url, httpclient);
+				response = initpostWithparms(url, httpclient,urlParameters);
 			}else{
 				response = initget(url, httpclient);
 			}
-			response.setEntity(new UrlEncodedFormEntity(urlParameters));
+			
 			HttpEntity entity = response.getEntity();
-
+			
 			InputStream is = entity.getContent();
 			rd = new BufferedReader(new InputStreamReader(is));
 			strbuilder = new StringBuilder(); // or StringBuffer if Java version
@@ -138,6 +140,8 @@ public class Communication {
 		response = httpclient.execute(httpget);
 		return response;
 	}
+	
+	
 	private static HttpResponse initpost(String url, HttpClient httpclient)
 			throws IOException, ClientProtocolException {
 		HttpResponse response;
@@ -147,5 +151,15 @@ public class Communication {
 		return response;
 	}
 	
+
+	private static HttpResponse initpostWithparms(String url, HttpClient httpclient, List<NameValuePair> urlParameters)
+			throws IOException, ClientProtocolException {
+		HttpResponse response=null;
+		HttpPost httppost = new HttpPost(url);
+		httppost.addHeader("TEAMTOKEN", TEAM_TOKEN);
+		httppost.setEntity(new UrlEncodedFormEntity(urlParameters));
+		response = httpclient.execute(httppost);
+		return response;
+	}
 	
 }

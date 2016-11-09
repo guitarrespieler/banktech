@@ -18,6 +18,7 @@ import model.gameObjects.Submarine;
 import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.EntityType;
 import model.gameObjects.entities.SubmarineDataHolder;
+import model.gameconfig.GameInfoDataHolder;
 
 /**
  * Modelltesztelésére létrehozott osztály by Beni.
@@ -38,20 +39,41 @@ public class ModelTest2 {
 			System.out.println("Create Lefutott");
 			System.out.println("Kapott ID:" + creator.getID());
 			GameJoiner joiner = new GameJoiner();
-
-			//System.out.println("Join Lefutott");
+			GameInfoDataHolder info = GameInfoDataHolder.refreshGameInfoDataHolder(creator.getID(), gsonobject);
+			
+			if(GameList.getRunningGameIds().contains((creator.getID())))
+			{
+						joiner.joinToThisGame(creator.getID());
+						System.out.println("Join Lefutott");
+			}
+			
+			
+			
+			
+			
+			
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
 			Submarine submarine = new Submarine(creator.getID(), gsonobject, submarinesdata.get(0));
 			System.out.println("A submarine létrehozása sikeres");
+			
 			submarine.move(1.0, 10.0);
 			System.out.println("A submarine mozgása sikeres");
-			//submarine.shoot(10.0);
-			System.out.println("A submarine shoot sikeres");
-			Map<EntityType, List<EntityDataHolder>> entities =  submarine.usePassiveSonar();
+//			//submarine.shoot(10.0);
+//			System.out.println("A submarine shoot sikeres");
+//			
+			Map<EntityType, List<EntityDataHolder>> entities =  submarine.usePassiveSonar();			
 			if(entities.containsKey(EntityType.Submarine))
 				System.out.println("A submarine sonar lat egy hajot melynek ID-ja"+entities.get(EntityType.Submarine).get(0).getId());
 			System.out.println("A submarine sonar sikeres");
+			/*
+			submarine.activateSonar();
+			entities =  submarine.usePassiveSonar();			
+			if(entities.containsKey(EntityType.Submarine))
+				System.out.println("A submarine AKTIV sonar lát egy hajót melynek ID-ja: "+entities.get(EntityType.Submarine).get(0).getId());
+			System.out.println("Az AKTIV submarine sonar sikeres");*/
+			
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
