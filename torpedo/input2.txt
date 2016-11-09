@@ -1,17 +1,57 @@
 {
-	"entity":
-		{
-		  "type": "Torpedo",
-		  "id": 635,
-		  "position": {
-		    "x": 200,
-		    "y": 200
-		  },
-		  "owner": {
-		    "name": "Team 1"
-		  },
-		  "velocity": 0,
-		  "angle": 0,
-		  "roundsMoved": 6
-		}
+  "submarines": [
+    {
+      "type": "Submarine",
+      "id": 634,
+      "position": {
+        "x": 300,
+        "y": 300
+      },
+      "owner": {
+        "name": "Team 1"
+      },
+      "velocity": 0,
+      "angle": 0,
+      "hp": 100,
+      "sonarCooldown": 0,
+      "torpedoCooldown": 0,
+      "sonarExtended": 0
+    },
+    {
+      "type": "Submarine",
+      "id": 635,
+      "position": {
+        "x": 200,
+        "y": 200
+      },
+      "owner": {
+        "name": "Team 1"
+      },
+      "velocity": 0,
+      "angle": 0,
+      "hp": 100,
+      "sonarCooldown": 0,
+      "torpedoCooldown": 0,
+      "sonarExtended": 0
+    },
+    {
+      "type": "Submarine",
+      "id": 636,
+      "position": {
+        "x": 100,
+        "y": 100
+      },
+      "owner": {
+        "name": "Team 1"
+      },
+      "velocity": 0,
+      "angle": 0,
+      "hp": 100,
+      "sonarCooldown": 0,
+      "torpedoCooldown": 0,
+      "sonarExtended": 0
+    }
+  ],
+  "message": "OK",
+  "code": 0
 }

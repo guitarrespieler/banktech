@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -53,9 +54,10 @@ public class OwnSubmarineRefresher {
 	private static List<SubmarineDataHolder> parseJson(Gson gsonRef, JsonObject job) {
 		JsonElement jes = job.get("submarines");
 		
+		JsonArray jar = jes.getAsJsonArray();
 		//FIXME not sure about this one...
 		@SuppressWarnings("unchecked")
-		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jes, (new ArrayList<SubmarineDataHolder>()).getClass());
+		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jar, (new ArrayList<SubmarineDataHolder>()).getClass());
 		return newSubmarineData;
 	}
 
