@@ -39,21 +39,26 @@ public class ControllerMain {
 		try {
 			cM.startGame();
 			cM.refreshAll();
-			long lastRound=0;
+			long lastRound=cM.gameInfo.getRound();
 			cM.gameFrame = new Frame(cM.gameInfo.getMapConfiguration());
-			while(cM.ownSubmarines.size()>0)
+			while(cM.ownSubmarines.size()>0||(cM.gameInfo.getRound()==cM.gameInfo.getMapConfiguration().getRounds()))
 			{
-				if(System.currentTimeMillis()-lastRound>cM.gameInfo.getMapConfiguration().getRoundLength())
+				cM.refreshActualGameInfo();
+				int currentRound = cM.gameInfo.getRound();
+				System.out.println("Max rounds: "+cM.gameInfo.getMapConfiguration().getRounds()+" Last Round: "+lastRound+" Current Round"+currentRound);
+				if(lastRound!=currentRound)
 				{
-					lastRound=System.currentTimeMillis();
 					cM.refreshAll();
-					cM.ownSubmarines.get(0).move(cM.gameInfo.getMapConfiguration().getMaxAccelerationPerRound(), 0.3);;
+					lastRound=cM.gameInfo.getRound();
+					
+					cM.moveSubmarines();
+					
 					
 				}
 				cM.drawGame();
 			}
 			
-			
+			cM.drawGame();
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,6 +133,15 @@ public class ControllerMain {
 		}
 	}
 	
+	private void moveSubmarines() throws CommException
+	{
+		for(Submarine submarine : ownSubmarines)
+		{
+			
+			SubmarineController.moveSubmarine(submarine,gameInfo);
+		}
+	}
+	
 	private void drawGame()
 	{
 		//Frame gameFrame = new Frame(gameInfo.getMapConfiguration());
@@ -139,5 +153,6 @@ public class ControllerMain {
 		
 		gameFrame.paintOwnSubmarines(ownSubmarinesData);
 	}
+	
 
 }
