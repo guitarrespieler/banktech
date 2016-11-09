@@ -83,7 +83,7 @@ public class GamePanel extends JPanel {
 		}		
 	}
 	
-	public void drawThisEntity(EntityDataHolder entity) {
+	private void drawThisEntity(EntityDataHolder entity) {
 		switch (entity.getType()) {
 		case Torpedo:
 			drawThisCircle(entity.getPosition(), mapData.getTorpedoExplosionRadius(), torpedoColor,(Graphics2D)getGraphics(),entity.getOwner());
@@ -128,5 +128,8 @@ public class GamePanel extends JPanel {
 			
 	}
 
+	public void setOwnSubmarineList(List<SubmarineDataHolder> list){
+		ownSubmarines = list;
+	}
 	
 }
