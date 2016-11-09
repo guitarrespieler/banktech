@@ -14,13 +14,13 @@ public class Node implements INode {
 	 * Kimenő élek tárolására
 	 * 
 	 */
-	protected LinkedList<Connection> outputs = new LinkedList<>();
+	protected LinkedList<Connection> outputs = new LinkedList<Connection>();
 	
 	/**
 	 * Bejövő élek tárolására
 	 * 
 	 */
-	protected LinkedList<Connection> inputs = new LinkedList<>();
+	protected LinkedList<Connection> inputs = new LinkedList<Connection>();
 	
 	/**
 	 * Csomópontban lévő ReLU érték tárolására
@@ -37,58 +37,93 @@ public class Node implements INode {
 		type = typeOfNode;
 	}
 
-	/* (non-Javadoc)
-	 * @see solutionOne.INode#addInput(solutionOne.Connection)
-	 */
-	@Override
 	public void addInput(Connection c) {
-		inputs.add(c);
+		// TODO Auto-generated method stub
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see solutionOne.INode#addOutput(solutionOne.Connection)
-	 */
-	@Override
 	public void addOutput(Connection c) {
-		outputs.add(c);
-
+		// TODO Auto-generated method stub
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see solutionOne.INode#getAllInputs()
-	 */
-	@Override
 	public LinkedList<Connection> getAllInputs() {
-		return inputs;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see solutionOne.INode#getAllOutputs()
-	 */
-	@Override
 	public LinkedList<Connection> getAllOutputs() {
-		return outputs;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see solutionOne.INode#getValue()
-	 */
-	@Override
 	public Double getValue() {
-		return value;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see solutionOne.INode#setValue()
-	 */
-	@Override
 	public void setValue(double param) {
-		value = param;		
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
 	public double derivateOfValue() {
-		return (value > 0)? 1.0 : 0.0;//0, ha a ReLU 0, 0-t ad vissza Egyébként 1-et
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+//	/* (non-Javadoc)
+//	 * @see solutionOne.INode#addInput(solutionOne.Connection)
+//	 */
+//	@Override
+//	public void addInput(Connection c) {
+//		inputs.add(c);
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see solutionOne.INode#addOutput(solutionOne.Connection)
+//	 */
+//	@Override
+//	public void addOutput(Connection c) {
+//		outputs.add(c);
+//
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see solutionOne.INode#getAllInputs()
+//	 */
+//	@Override
+//	public LinkedList<Connection> getAllInputs() {
+//		return inputs;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see solutionOne.INode#getAllOutputs()
+//	 */
+//	@Override
+//	public LinkedList<Connection> getAllOutputs() {
+//		return outputs;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see solutionOne.INode#getValue()
+//	 */
+//	@Override
+//	public Double getValue() {
+//		return value;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see solutionOne.INode#setValue()
+//	 */
+//	@Override
+//	public void setValue(double param) {
+//		value = param;		
+//	}
+//
+//	@Override
+//	public double derivateOfValue() {
+//		return (value > 0)? 1.0 : 0.0;//0, ha a ReLU 0, 0-t ad vissza Egyébként 1-et
+//	}
 
 }

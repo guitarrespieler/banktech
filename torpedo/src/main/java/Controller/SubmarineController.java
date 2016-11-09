@@ -1,8 +1,6 @@
 package Controller;
 
 import java.util.List;
-import java.util.Random;
-
 import communication.CommException;
 import model.gameObjects.Position;
 import model.gameObjects.Submarine;
@@ -10,16 +8,16 @@ import model.gameconfig.GameInfoDataHolder;
 
 public class SubmarineController {
 	
-	private static double COLLIDEOFFSET = 3;
+	private static double COLLIDEOFFSET = 5;
 	
 	
 
 	public static void moveSubmarine(Submarine submarine,GameInfoDataHolder gameInfo) throws CommException
 	{
 		//submarine.move(gameInfo.getMapConfiguration().getMaxAccelerationPerRound(), 0.3);
-		Random rand = new Random();
+//		Random rand = new Random();
 		double acceleration = gameInfo.getMapConfiguration().getMaxAccelerationPerRound();
-		double angle = rand.nextInt((int)gameInfo.getMapConfiguration().getMaxSteeringPerRound());
+//		double angle = rand.nextInt((int)gameInfo.getMapConfiguration().getMaxSteeringPerRound());
 		
 		if(isCollideWithStaticMapElement(submarine,gameInfo,gameInfo.getMapConfiguration().getMaxAccelerationPerRound()))
 			acceleration *=-1;	
@@ -49,14 +47,10 @@ public class SubmarineController {
 		
 		while(currentVelocity!=0)
 		{
-			int i;
-			if(currentVelocity==20)
-				i = 1;
 			stopPosition = getNextRoundPosition(stopPosition,currentVelocity,angle);
 			if(currentVelocity-maxAcceleration<0)
 				currentVelocity=0;
 			currentVelocity-=maxAcceleration;
-			
 		}
 		
 		return stopPosition;

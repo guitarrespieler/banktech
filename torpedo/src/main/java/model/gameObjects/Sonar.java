@@ -125,11 +125,21 @@ public class Sonar {
 	 *	Szétosztja a kapott entity-ket a különböző listákba. 
 	 */
 	private void sortEntities(List<EntityDataHolder> list) {
-		for (EntityDataHolder entity : list) {
+		for(int i = 0; i < list.size(); i++){
+			EntityDataHolder entity = list.get(i);
 			if(EntityType.Submarine.equals(entity.getType())){
-				entities.get(EntityType.Submarine).add(entity);				
+				List<EntityDataHolder> subList = entities.get(EntityType.Submarine);
+				if (subList == null) {
+					return;
+				}
+				subList.clear();
+				subList.add(entity);				
 			}else{
-				entities.get(EntityType.Torpedo).add(entity);
+				List<EntityDataHolder> torpedoList = entities.get(EntityType.Torpedo);
+				if(torpedoList == null)
+					return;
+				torpedoList.clear();
+				torpedoList.add(entity);
 			}
 		}
 	}

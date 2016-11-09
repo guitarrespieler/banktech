@@ -5,6 +5,11 @@ package artificialintelligence.NeuralNetworkInitializer;
 
 import java.util.LinkedList;
 
+import artificialintelligence.neuralnetwork.NeuralNetwork;
+import artificialintelligence.neuralnetwork.Neuron;
+import artificialintelligence.neuralnetwork.Node;
+import artificialintelligence.neuralnetwork.NodeType;
+
 
 /**
  * Ez az osztály felelős a szabványos bemeneten érkező
@@ -65,7 +70,7 @@ public class ArchitectureDecoder {
 		//mesterséges neuronok hozzáadása
 		for(int i = 0; i < params.size(); i++){
 			int limit = params.get(i);
-			LinkedList<Neuron> neuronList = new LinkedList<>();
+			LinkedList<Neuron> neuronList = new LinkedList<Neuron>();
 			for(int j = 0; j < limit; j++){
 				neuronList.add(new Neuron(NodeType.HiddenLayer));
 			}
