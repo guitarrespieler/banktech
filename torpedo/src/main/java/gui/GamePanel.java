@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,16 +62,19 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;		
+		Graphics2D g2d = (Graphics2D) g;
+		
+		
+		
 		g2d.scale(xScale, yScale);	//skálázni kell, mert nem fér bele a HD ablakméretbe
 		g2d.translate(xTranslate, yTranslate);//el kell tolni, mert rossz irányban van
 		
 		if(!isPreferredSizeSet())
 			setSize(getPreferredSize());
-	
-		setBackground(BackgroundColor);
-		super.paintComponent(g2d);
 		
+		//setBackground(BackgroundColor);
+		//super.paintComponent(g2d);
+		paintOcean(g2d);
 		paintIslands(g2d);
 		
 		for (EntityDataHolder entityDataHolder : otherEntities) {
@@ -79,6 +83,12 @@ public class GamePanel extends JPanel {
 		for (SubmarineDataHolder submarine : ownSubmarines) {
 			drawThisEntity(submarine,g2d);
 		}
+	}
+	
+	private void paintOcean(Graphics2D g2d)
+	{
+		 g2d.setPaint(BackgroundColor);
+		 g2d.fill(new Rectangle2D.Double(0, 0,mapData.getWidth(),mapData.getHeight()));
 	}
 
 	private void paintIslands(Graphics2D g2d) {
