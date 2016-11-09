@@ -54,18 +54,24 @@ public class Submarine {
 	 * @throws CommException 
 	 */
 	public void move(Double speed, Double turnAngle) throws CommException {
-		List<NameValuePair> urlParameters = speedparameterlistparse(speed, turnAngle);
+		JsonObject urlParameters = moveParmaterJson(speed, turnAngle);
 		String response = Communication.postwithparams(URL_TAG+gameID+"/submarine"+"/" +dataHolder.getId()+"/move",urlParameters);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		CommException.communicationcheck(object);
 	}
 
-	private List<NameValuePair> speedparameterlistparse(Double speed, Double turnAngle) {
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		urlParameters.add(new BasicNameValuePair("speed", speed.toString()));
-		urlParameters.add(new BasicNameValuePair("turn", turnAngle.toString()));
-		return urlParameters;
+	private JsonObject moveParmaterJson(Double speed, Double turnAngle) {
+		
+		String jsonstringTurn ="\"turn\": "+turnAngle.toString();
+		String jsonstringSpeed ="\"speed\": "+speed.toString();
+		String jsonstring = "{"+jsonstringSpeed+","+jsonstringTurn+"}";
+		
+		Gson gson = new Gson();
+		
+		JsonObject job = gson.fromJson(jsonstring, JsonObject.class);
+		
+		return job;
 	}
 
 	/**
@@ -78,17 +84,22 @@ public class Submarine {
 	 * @throws CommException 
 	 */
 	public void shoot(double shootAngle) throws CommException {
-		List<NameValuePair> urlParameters = shootparameterlistparse(shootAngle);
-		String response = Communication.postwithparams(URL_TAG+"/"+gameID+"/submarine"+"/"+ dataHolder.getId()+"/move",urlParameters);
+		JsonObject urlParameters = shootparameterlistparse(shootAngle);
+		String response = Communication.postwithparams(URL_TAG+gameID+"/submarine"+"/"+ dataHolder.getId()+"/shoot",urlParameters);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		CommException.communicationcheck(object);
 	}
 	
-	private List<NameValuePair> shootparameterlistparse(Double turnAngle) {
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		urlParameters.add(new BasicNameValuePair("angle", turnAngle.toString() ));
-		return urlParameters;
+	private JsonObject shootparameterlistparse(Double turnAngle) {
+		String jsonstringAngle ="\"angle\": "+turnAngle.toString();
+		String jsonstring = "{"+jsonstringAngle+"}";
+		
+		Gson gson = new Gson();
+		
+		JsonObject job = gson.fromJson(jsonstring, JsonObject.class);
+		
+		return job;
 	}
 
 	public Map<EntityType, List<EntityDataHolder>> usePassiveSonar() throws CommException {

@@ -57,12 +57,12 @@ public class ModelTest2 {
 			Submarine submarine = new Submarine(creator.getID(), gsonobject, submarinesdata.get(0));
 			System.out.println("A submarine létrehozása sikeres");
 			
-			submarine.move(1.0, 10.0);
+			submarine.move(0.2, 0.2);
 			System.out.println("A submarine mozgása sikeres");
-//			//submarine.shoot(10.0);
-//			System.out.println("A submarine shoot sikeres");
+			submarine.shoot(10.0);
+			System.out.println("A submarine shoot sikeres");
 //			
-			Map<EntityType, List<EntityDataHolder>> entities =  submarine.usePassiveSonar();			
+/*			Map<EntityType, List<EntityDataHolder>> entities =  submarine.usePassiveSonar();			
 			if(entities.containsKey(EntityType.Submarine))
 				System.out.println("A submarine sonar lat egy hajot melynek ID-ja"+entities.get(EntityType.Submarine).get(0).getId());
 			System.out.println("A submarine sonar sikeres");
