@@ -1,6 +1,7 @@
 package torpedo;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -9,6 +10,7 @@ import communication.GameJoiner;
 import communication.OwnGameCreator;
 import model.gameObjects.OwnSubmarineRefresher;
 import model.gameObjects.Submarine;
+import model.gameObjects.entities.SubmarineDataHolder;
 
 /**
  * Modell tesztelésére létrehozott osztály
@@ -27,7 +29,9 @@ public class ModelTest {
 			GameJoiner joiner = new GameJoiner();
 			joiner.joinToThisGame(creator.getID());
 			System.out.println("Join Lefutott");
-			Submarine submarine = new Submarine(creator.getID(),gsonobject);
+			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
+			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
+			Submarine submarine = new Submarine(creator.getID(),gsonobject,submarinesdata.get(0));
 			System.out.println("A submarine létrehozása sikeres");
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -35,7 +39,7 @@ public class ModelTest {
 		} catch (CommException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println(e.getErrorCode());
+			System.out.println(CommException.errors.get(e.getErrorCode()).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
