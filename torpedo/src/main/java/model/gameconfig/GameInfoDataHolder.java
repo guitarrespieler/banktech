@@ -76,16 +76,6 @@ public class GameInfoDataHolder {
 		
 		GameInfoDataHolder newDataHolder = gsonRef.fromJson(jes, GameInfoDataHolder.class);
 		
-		JsonObject mapdataJob = job.get("mapConfiguration").getAsJsonObject();
-		
-		JsonElement islands = mapdataJob.get("Positions");
-		
-		Type listType = new TypeToken<List<Position>>() {}.getType();
-
-		List<Position> islandPositions = gsonRef.fromJson(islands,listType);
-		
-		newDataHolder.getMapConfiguration().setPositions(islandPositions);
-		
 		return newDataHolder;
 	}
 

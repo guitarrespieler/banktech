@@ -17,7 +17,7 @@ public class MapConfigDataHolder {
     @SerializedName("height")
     @Expose
     private int height;
-    @SerializedName("Positions")
+    @SerializedName("islandPositions")
     @Expose
     private List<Position> Positions = new LinkedList<Position>();
     @SerializedName("teamCount")
