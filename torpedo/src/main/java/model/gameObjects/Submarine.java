@@ -55,7 +55,7 @@ public class Submarine {
 	 */
 	public void move(Double speed, Double turnAngle) throws CommException {
 		List<NameValuePair> urlParameters = speedparameterlistparse(speed, turnAngle);
-		String response = Communication.postwithparams(URL_TAG+gameID+"/submarine"+ dataHolder.getId()+"/move",urlParameters);
+		String response = Communication.postwithparams(URL_TAG+"/"+gameID+"/submarine"+"/" +dataHolder.getId()+"/move",urlParameters);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		CommException.communicationcheck(object);
@@ -79,7 +79,7 @@ public class Submarine {
 	 */
 	public void shoot(double shootAngle) throws CommException {
 		List<NameValuePair> urlParameters = shootparameterlistparse(shootAngle);
-		String response = Communication.postwithparams(URL_TAG+gameID+"/submarine"+ dataHolder.getId()+"/move",urlParameters);
+		String response = Communication.postwithparams(URL_TAG+"/"+gameID+"/submarine"+"/"+ dataHolder.getId()+"/move",urlParameters);
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		CommException.communicationcheck(object);

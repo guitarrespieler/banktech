@@ -1,8 +1,11 @@
+/**
+ * 
+ */
 package torpedo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 
@@ -12,42 +15,53 @@ import communication.GameList;
 import communication.OwnGameCreator;
 import model.gameObjects.OwnSubmarineRefresher;
 import model.gameObjects.Submarine;
+import model.gameObjects.entities.EntityDataHolder;
+import model.gameObjects.entities.EntityType;
 import model.gameObjects.entities.SubmarineDataHolder;
 
 /**
- * Modell tesztelésére létrehozott osztály
- * @author tibor
+ * Modelltesztelésére létrehozott osztály by Beni.
+ * 
+ * @author raszt
  *
  */
-public class ModelTest {
+public class ModelTest2 {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		OwnGameCreator creator = new OwnGameCreator();
 		try {
 			Gson gsonobject = new Gson();
 			creator.createOwnGame();
 			System.out.println("Create Lefutott");
-			System.out.println("Kapott ID:"+creator.getID());
+			System.out.println("Kapott ID:" + creator.getID());
 			GameJoiner joiner = new GameJoiner();
-			try{
+			try {
 				joiner.joinToThisGame(creator.getID());
-			}catch (CommException e) {
-				if(e.getErrorCode() == 2){
+			} catch (CommException e) {
+				if (e.getErrorCode() == 2) {
 					List<Long> gamelist = GameList.getRunningGameIds();
 					gamelist.remove(creator.getID());
 					joiner.joinToThisGame(gamelist.get(0));
-<<<<<<< HEAD
-				}					
-=======
-				}		
->>>>>>> branch 'master' of https://github.com/guitarrespieler/banktech.git
+				}
+
 			}
-			
+
 			System.out.println("Join Lefutott");
 			OwnSubmarineRefresher subrefresher = new OwnSubmarineRefresher();
 			List<SubmarineDataHolder> submarinesdata = subrefresher.refreshTheseSubmarines(creator.getID(), gsonobject);
-			Submarine submarine = new Submarine(creator.getID(),gsonobject,submarinesdata.get(0));
+			Submarine submarine = new Submarine(creator.getID(), gsonobject, submarinesdata.get(0));
 			System.out.println("A submarine létrehozása sikeres");
+			//submarine.move(1.0, 10.0);
+			System.out.println("A submarine mozgása sikeres");
+			//submarine.shoot(10.0);
+			System.out.println("A submarine shoot sikeres");
+			Map<EntityType, List<EntityDataHolder>> entities =  submarine.usePassiveSonar();
+			if(entities.containsKey(EntityType.Submarine))
+				System.out.println("A submarine sonar lat egy hajot melynek ID-ja"+entities.get(EntityType.Submarine).get(0).getId());
+			System.out.println("A submarine sonar sikeres");
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
