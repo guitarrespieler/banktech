@@ -40,11 +40,10 @@ public class Submarine {
 	
 	private String URL_TAG="game/";
 	
-	public Submarine(long gameID,Gson gsonObject){		
+	public Submarine(long gameID,Gson gsonObject,SubmarineDataHolder data){		
 		this.gameID = gameID;
-		
 		gsonRef = gsonObject;
-		
+		dataHolder = data;
 		sonar = new Sonar(this.gameID, dataHolder.getId(), gsonRef);
 	}
 
