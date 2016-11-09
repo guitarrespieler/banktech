@@ -147,7 +147,7 @@ public class GamePanel extends JPanel {
 
 	public void setOwnSubmarineList(List<SubmarineDataHolder> list){
 		ownSubmarines = list;
-		invalidate();
+		repaint();
 	}
 
 	public void addOtherEntities(List<EntityDataHolder> entities) {
