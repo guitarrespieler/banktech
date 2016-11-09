@@ -126,7 +126,7 @@ public class MapConfigDataHolder {
     /**
      * 
      * @return
-     *     The Positions
+     *     The Islands' Positions
      */
     public List<Position> getPositions() {
         return Positions;
