@@ -55,7 +55,8 @@ public class CommException extends Exception {
 	}
 	
 	public static void communicationcheck(JsonObject object) throws CommException{
-		if(object.get("code").toString() != "0")
-			throw new CommException(Integer.parseInt(object.get("code").toString()));
+		if(object.get("code").toString().equals("0") )
+			return;
+		throw new CommException(Integer.parseInt(object.get("code").toString()));
 	}
 }
