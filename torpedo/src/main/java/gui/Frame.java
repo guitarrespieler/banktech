@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Label;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,8 +11,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -19,7 +24,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import model.gameObjects.Position;
+import model.gameObjects.Submarine;
 import model.gameObjects.entities.EntityDataHolder;
+import model.gameObjects.entities.EntityType;
 import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.MapConfigDataHolder;
 import torpedoGame.Main;
@@ -46,8 +53,6 @@ public class Frame extends JFrame {
 		init(mapconfigdata);
 	}
 	
-	
-
 	private void init(MapConfigDataHolder mapconfigdata) {
 		setLocationRelativeTo(null);
 		
@@ -57,7 +62,7 @@ public class Frame extends JFrame {
 		
 		gamePanel = new GamePanel(gamePanelDimension,mapconfig);
 		
-		add(gamePanel);
+		add(gamePanel);		
 
 		setVisible(true);
 		
@@ -70,89 +75,23 @@ public class Frame extends JFrame {
 	public void paintOwnSubmarines(List<SubmarineDataHolder>subs){
 		gamePanel.setOwnSubmarineList(subs);
 	}
-	
-	public static void main(String[] args) {
-		MapConfigDataHolder mc = new MapConfigDataHolder();
-		{//most beállítom kézzel, hogy ki tudjam próbálni
-			mc.setHeight(800);
-			mc.setWidth(1700);
-			
-			List<Position> posList = new LinkedList<Position>();
-			posList.add(new Position(){{
-				setX(0.0);
-				setY(0.0);
-			}});
-			
-			posList.add(new Position(){{
-				setX(1700.0);
-				setY(800.0);
-			}});
-			
-			mc.setIslandSize(500);
-			mc.setPositions(posList);
-			
-			mc.setSubmarineSize(100);
-		}
-		
-		List<SubmarineDataHolder> submarines = makeSomeSubmarineFromJson();
-		
-		Frame f = new Frame(mc);
-		
-		f.paintOwnSubmarines(submarines);
-	}
 
-	private static List<SubmarineDataHolder> makeSomeSubmarineFromJson() {
-		String jsonStr = null;
-		try {
-			jsonStr = readIn();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		Gson gson = new Gson();
-		
-		JsonObject job = gson.fromJson(jsonStr, JsonObject.class);
-		
-		List<SubmarineDataHolder> list = parseJson(gson, job);
-		
-		return list;
-	}
-	
 	/**
-	 * Listát csinál az új infókból.
+	 * A kapott listát odaadja a gamePanelnek, ami kirajzolja a benne lévő entity-ket.
 	 */
-	private static List<SubmarineDataHolder> parseJson(Gson gsonRef, JsonObject job) {
-		JsonElement jes = job.get("submarines");
+	public void paintTheseEnemies(Map<Submarine, Map<EntityType, List<EntityDataHolder>>> subMarinesSonarData) {
+		Set<Submarine> keys = subMarinesSonarData.keySet();
+
+		List<EntityDataHolder> entities = new LinkedList<EntityDataHolder>();
 		
-		java.lang.reflect.Type listType = new TypeToken<List<SubmarineDataHolder>>() {}.getType();
-
-		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jes,listType);
-		return newSubmarineData;
-	}
-
-	private static String readIn() throws FileNotFoundException {
-
-		BufferedReader buf = new BufferedReader(new FileReader(new File("../torpedo/submarines.txt")));
-
-		String line = "";
-		StringBuilder sb = new StringBuilder();
-		try {
-			// huehuehuehue
-			while ((line = buf.readLine()) != null) {
-				sb.append(line);
-				sb.append("\n");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				buf.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		for (Submarine submarine : keys) {
+			Map<EntityType,List<EntityDataHolder>>map = subMarinesSonarData.get(submarine);
+			
+			entities.addAll(map.get(EntityType.Submarine));
+			entities.addAll(map.get(EntityType.Torpedo));
+			
 		}
-
-		return sb.toString();
+		gamePanel.addOtherEntities(entities);
 	}
 
 }

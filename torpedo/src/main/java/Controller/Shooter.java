@@ -51,7 +51,7 @@ public class Shooter {
 		double angle = controlledUnit.getDataHolder().getAngle();
 		
 		//ha nincs a közelben ellenfél 
-		if(nearbyEntities.isEmpty()){			
+		if(nearbyEntities == null || nearbyEntities.isEmpty()){			
 			return angle;
 		}
 		EntityDataHolder enemySubmarine = null;
