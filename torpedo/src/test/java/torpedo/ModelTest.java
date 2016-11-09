@@ -36,8 +36,7 @@ public class ModelTest {
 					List<Long> gamelist = GameList.getRunningGameIds();
 					gamelist.remove(creator.getID());
 					joiner.joinToThisGame(gamelist.get(0));
-				}
-					
+				}					
 			}
 			
 			System.out.println("Join Lefutott");

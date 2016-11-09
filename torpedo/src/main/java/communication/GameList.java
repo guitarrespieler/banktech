@@ -23,7 +23,8 @@ public class GameList {
 		Gson parser = new Gson();
 		JsonObject object = parser.fromJson(response,JsonObject.class);
 		CommException.communicationcheck(object);
-		String IDs = object.get("game").toString();
+		String IDs = object.get("games").toString();
+		IDs = IDs.substring(1, IDs.length()-1);
 		StringTokenizer st = new StringTokenizer(IDs, ",");
 		ArrayList<Long> returnlist = new ArrayList<Long>();
 		while (st.hasMoreElements()){

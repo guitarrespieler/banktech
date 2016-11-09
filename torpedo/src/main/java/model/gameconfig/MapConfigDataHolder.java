@@ -2,6 +2,7 @@
 package model.gameconfig;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -18,7 +19,7 @@ public class MapConfigDataHolder {
     private int height;
     @SerializedName("Positions")
     @Expose
-    private List<Position> Positions = new ArrayList<Position>();
+    private List<Position> Positions = new LinkedList<Position>();
     @SerializedName("teamCount")
     @Expose
     private int teamCount;

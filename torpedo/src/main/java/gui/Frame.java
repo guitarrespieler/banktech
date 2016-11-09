@@ -2,9 +2,24 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import model.gameObjects.Position;
+import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.MapConfigDataHolder;
 import torpedoGame.Main;
 
@@ -14,8 +29,9 @@ public class Frame extends JFrame {
 	private Dimension gamePanelDimension;
 
 	private MapConfigDataHolder mapconfig;
+	private GamePanel gamePanel;
 	
-	public Frame(MapConfigDataHolder mapconfigdata) {
+	public Frame(MapConfigDataHolder mapconfigdata, List<SubmarineDataHolder> submarines) {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,19 +42,19 @@ public class Frame extends JFrame {
 		
 		setTitle("Torpedo Game");
 		
-		init(mapconfigdata);
+		init(mapconfigdata,submarines);
 	}
 
-	private void init(MapConfigDataHolder mapconfigdata) {
+	private void init(MapConfigDataHolder mapconfigdata, List<SubmarineDataHolder>submarines) {
 		setLocationRelativeTo(null);
 		
 		mapconfig = mapconfigdata;
 		gamePanelDimension = new Dimension(mapconfig.getWidth(), mapconfig.getHeight());
 		
 		
-		GamePanel gp = new GamePanel(gamePanelDimension);
+		gamePanel = new GamePanel(gamePanelDimension,mapconfig, submarines);
 		
-		add(gp);
+		add(gamePanel);
 		
 		
 		setVisible(true);
@@ -47,10 +63,82 @@ public class Frame extends JFrame {
 	
 	public static void main(String[] args) {
 		MapConfigDataHolder mc = new MapConfigDataHolder();
+		{//most beállítom kézzel, hogy ki tudjam próbálni
+			mc.setHeight(800);
+			mc.setWidth(1700);
+			
+			List<Position> posList = new LinkedList<Position>();
+			posList.add(new Position(){{
+				setX(0.0);
+				setY(0.0);
+			}});
+			
+			posList.add(new Position(){{
+				setX(1700.0);
+				setY(800.0);
+			}});
+			
+			mc.setIslandSize(150);
+			mc.setPositions(posList);
+		}
 		
-		mc.setHeight(400);
-		mc.setWidth(850);
-		new Frame(mc);
+		List<SubmarineDataHolder> submarines = makeSomeSubmarineFromJson();
+		
+		new Frame(mc,submarines);
+	}
+
+	private static List<SubmarineDataHolder> makeSomeSubmarineFromJson() {
+		String jsonStr = null;
+		try {
+			jsonStr = readIn();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		Gson gson = new Gson();
+		
+		JsonObject job = gson.fromJson(jsonStr, JsonObject.class);
+		
+		List<SubmarineDataHolder> list = parseJson(gson, job);
+		
+		return list;
+	}
+	
+	/**
+	 * Listát csinál az új infókból.
+	 */
+	private static List<SubmarineDataHolder> parseJson(Gson gsonRef, JsonObject job) {
+		JsonElement jes = job.get("submarines");
+		
+		java.lang.reflect.Type listType = new TypeToken<List<SubmarineDataHolder>>() {}.getType();
+
+		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jes,listType);
+		return newSubmarineData;
+	}
+
+	private static String readIn() throws FileNotFoundException {
+
+		BufferedReader buf = new BufferedReader(new FileReader(new File("../torpedo/submarines.txt")));
+
+		String line = "";
+		StringBuilder sb = new StringBuilder();
+		try {
+			// huehuehuehue
+			while ((line = buf.readLine()) != null) {
+				sb.append(line);
+				sb.append("\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				buf.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return sb.toString();
 	}
 
 }
