@@ -12,7 +12,7 @@ public class Population{
 	}
 	
 	public void sortPopulationDesceding(){
-		Arrays.sort(population);
+		//Arrays.sort(population);
 	}
 
 }

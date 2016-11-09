@@ -33,7 +33,7 @@ public class ModelTest {
 			System.out.println(creator.getID());
 			GameList list = new GameList();
 			//GameJoiner joiner = new GameJoiner();
-			joiner.joinToThisGame(creator.getID());
+			//joiner.joinToThisGame(creator.getID());
 			List<Long> runninggames = list.getRunningGameIds();
 			for (int i = 0; i < runninggames.size(); i++) {
 				System.out.println("futó jatek " + runninggames.get(i));
