@@ -30,9 +30,10 @@ public class OwnSubmarineRefresher {
 	 * Lekéri a saját tengeralattjáróink értékeit
 	 * és frissíti is azok adatait.
 	 * @param submarineList a frissítendő tengeralattjárók listája
+	 * @return 
 	 * @throws CommException 
 	 */
-	public static void refreshTheseSubmarines(long gameID,List<Submarine> submarineList, Gson gsonRef) throws CommException{
+	public static List<SubmarineDataHolder> refreshTheseSubmarines(long gameID,List<Submarine> submarineList, Gson gsonRef) throws CommException{
 		//url tag elkészítése
 		String URL_TAG = createUrlTag(gameID);
 		//http kérés
@@ -45,8 +46,7 @@ public class OwnSubmarineRefresher {
 		@SuppressWarnings("unchecked")
 		List<SubmarineDataHolder> newSubmarineData = parseJson(gsonRef, job);
 		
-		
-		refreshTheseSubmarines(submarineList, newSubmarineData);
+		return newSubmarineData;
 	}
 
 	/**
@@ -60,23 +60,7 @@ public class OwnSubmarineRefresher {
 		List<SubmarineDataHolder> newSubmarineData = gsonRef.fromJson(jes, (new ArrayList<SubmarineDataHolder>()).getClass());
 		return newSubmarineData;
 	}
-
-	/**
-	 * @param submarineList ezeket a hajók dataHoldereit frissíti
-	 * @param newSubmarineData az ebben található értékekkel
-	 */
-	private static void refreshTheseSubmarines(List<Submarine> submarineList, List<SubmarineDataHolder> newSubmarineData) {
-		for (SubmarineDataHolder newEntityDataHolder : newSubmarineData) {
-			for (Submarine submarine : submarineList) {
-				SubmarineDataHolder dataHolder = submarine.getDataHolder();
-				
-				if(dataHolder == null || newEntityDataHolder.equals(dataHolder)){
-					submarine.refreshData(newEntityDataHolder);
-				}
-			}
-		}
-	}
-
+	
 	/**
 	 * A http kéréshez szükséges URL_TAG-et állítja elő.
 	 */
