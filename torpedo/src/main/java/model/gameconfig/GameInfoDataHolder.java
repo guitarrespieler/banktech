@@ -40,13 +40,13 @@ public class GameInfoDataHolder {
     private GameStatus status;
 
 	/**
-	 * Frissíti a paraméterül kapott dataHolder objektumot
+	 * Lekéri a GameInfo-t a szerverről és visszaadja az újat.
 	 * @throws CommException 
 	 */
-	public static void refreshGameInfoDataHolder(GameInfoDataHolder oldDataHolder, Gson gsonRef) throws CommException{
+	public static GameInfoDataHolder refreshGameInfoDataHolder(long GameID,Gson gsonRef) throws CommException{
 		
 		//Url tag összeállítása
-		String URL_TAG = createUrlTag(oldDataHolder.getId());
+		String URL_TAG = createUrlTag(GameID);
 		
 		//http kérés
 		String jsonStr = Communication.get(URL_TAG);
@@ -58,7 +58,9 @@ public class GameInfoDataHolder {
 		CommException.communicationcheck(job);
 		
 		//frissítés
-		oldDataHolder = createNewDataHolder(gsonRef, job);		
+		GameInfoDataHolder newData = createNewDataHolder(gsonRef, job);		
+		
+		return newData;
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class GameInfoDataHolder {
 	 * @param id
 	 * @return
 	 */
-	private static String createUrlTag(int gameId) {
+	private static String createUrlTag(long gameId) {
 		return PRE_urltag + gameId;
 	}
     
