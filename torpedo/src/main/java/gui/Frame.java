@@ -45,6 +45,8 @@ public class Frame extends JFrame {
 		
 		init(mapconfigdata);
 	}
+	
+	
 
 	private void init(MapConfigDataHolder mapconfigdata) {
 		setLocationRelativeTo(null);
