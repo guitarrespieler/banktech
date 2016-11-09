@@ -41,9 +41,9 @@ public class ControllerMain {
 			cM.refreshAll();
 			long lastRound=cM.gameInfo.getRound();
 			cM.gameFrame = new Frame(cM.gameInfo.getMapConfiguration());
-			while(cM.ownSubmarines.size()>0||(cM.gameInfo.getRound()==cM.gameInfo.getMapConfiguration().getRounds()))
+			while(cM.ownSubmarines.size()>0 && (cM.gameInfo.getRound()!=cM.gameInfo.getMapConfiguration().getRounds()))
 			{
-				cM.refreshActualGameInfo();
+				
 				int currentRound = cM.gameInfo.getRound();
 				System.out.println("Max rounds: "+cM.gameInfo.getMapConfiguration().getRounds()+" Last Round: "+lastRound+" Current Round"+currentRound);
 				if(lastRound!=currentRound)
@@ -55,6 +55,7 @@ public class ControllerMain {
 					
 					
 				}
+				cM.refreshActualGameInfo();
 				cM.drawGame();
 			}
 			
