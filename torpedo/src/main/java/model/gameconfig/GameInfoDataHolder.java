@@ -1,5 +1,6 @@
-package model.gameconfig;
+	package model.gameconfig;
 
+import java.lang.reflect.Type;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
 import communication.CommException;
 import communication.Communication;
+import model.gameObjects.Position;
+import model.gameObjects.entities.SubmarineDataHolder;
 
 public class GameInfoDataHolder {
 	
@@ -71,6 +75,16 @@ public class GameInfoDataHolder {
 		JsonElement jes = job.get("game");
 		
 		GameInfoDataHolder newDataHolder = gsonRef.fromJson(jes, GameInfoDataHolder.class);
+		
+		JsonObject mapdataJob = job.get("mapConfiguration").getAsJsonObject();
+		
+		JsonElement islands = mapdataJob.get("Positions");
+		
+		Type listType = new TypeToken<List<Position>>() {}.getType();
+
+		List<Position> islandPositions = gsonRef.fromJson(islands,listType);
+		
+		newDataHolder.getMapConfiguration().setPositions(islandPositions);
 		
 		return newDataHolder;
 	}

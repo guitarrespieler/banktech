@@ -43,7 +43,7 @@ public class OwnSubmarineRefresher {
 		JsonObject job = gsonRef.fromJson(jsonStr, JsonObject.class);
 		//hibaellenőrzés
 		CommException.communicationcheck(job);
-		@SuppressWarnings("unchecked")
+
 		List<SubmarineDataHolder> newSubmarineData = parseJson(gsonRef, job);
 		
 		return newSubmarineData;
