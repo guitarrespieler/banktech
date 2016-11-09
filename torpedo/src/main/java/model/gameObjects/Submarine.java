@@ -44,7 +44,7 @@ public class Submarine {
 		this.gameID = gameID;
 		
 		gsonRef = gsonObject;
-		
+		OwnSubmarineRefresher.refreshSubmarines(gameID, submarine, gsonObject);
 		sonar = new Sonar(this.gameID, dataHolder.getId(), gsonRef);
 	}
 
