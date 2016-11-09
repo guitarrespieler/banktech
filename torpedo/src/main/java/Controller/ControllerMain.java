@@ -19,6 +19,7 @@ import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.EntityType;
 import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.GameInfoDataHolder;
+import model.gameconfig.MapConfigDataHolder;
 
 public class ControllerMain {
 	
@@ -41,6 +42,8 @@ public class ControllerMain {
 			cM.refreshAll();
 			long lastRound=cM.gameInfo.getRound();
 			cM.gameFrame = new Frame(cM.gameInfo.getMapConfiguration());
+			
+			//Control-loop
 			while(cM.ownSubmarines.size()>0||(cM.gameInfo.getRound()==cM.gameInfo.getMapConfiguration().getRounds()))
 			{
 				cM.refreshActualGameInfo();
@@ -52,6 +55,8 @@ public class ControllerMain {
 					lastRound=cM.gameInfo.getRound();
 					
 					cM.moveSubmarines();
+					
+					cM.shootTorpedos();
 					
 					
 				}
@@ -75,6 +80,22 @@ public class ControllerMain {
 		
 	}
 	
+	/**
+	 * Használja a szonárt, majd lő egyet valamerre.
+	 */
+	private void shootTorpedos() {
+		for (Submarine submarine : ownSubmarines) {
+			try {
+				Map<EntityType, List<EntityDataHolder>> nearbyEntities = submarine.usePassiveSonar();
+				submarine.shoot(Shooter.angleToShoot(submarine, nearbyEntities));
+			} catch (CommException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	/**
 	 * Létrhoz egy játékot, ha csatlakoznia kell hozzá csatlakozik.
 	 * @throws IOException 
