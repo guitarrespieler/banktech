@@ -74,10 +74,10 @@ public class GamePanel extends JPanel {
 		paintIslands(g2d);
 		
 		for (EntityDataHolder entityDataHolder : otherEntities) {
-			drawThisEntity(entityDataHolder);
+			drawThisEntity(entityDataHolder,g2d);
 		}
 		for (SubmarineDataHolder submarine : ownSubmarines) {
-			drawThisEntity(submarine);
+			drawThisEntity(submarine,g2d);
 		}
 	}
 
@@ -91,11 +91,11 @@ public class GamePanel extends JPanel {
 		}		
 	}
 	
-	private void drawThisEntity(EntityDataHolder entity) {
+	private void drawThisEntity(EntityDataHolder entity,Graphics2D g2d) {
 		switch (entity.getType()) {
 		case Torpedo:
 			drawThisCircle(entity.getPosition(), mapData.getTorpedoExplosionRadius(),
-					torpedoColor,(Graphics2D)getGraphics(),entity.getOwner());
+					torpedoColor,g2d,entity.getOwner());
 			break;
 		case Submarine:
 			Color color = null;
@@ -105,7 +105,7 @@ public class GamePanel extends JPanel {
 				color = enemySubmarineColor;
 			}			
 			drawThisCircle(entity.getPosition(), mapData.getSubmarineSize(), 
-					color,(Graphics2D)getGraphics(),entity.getOwner());			
+					color,g2d,entity.getOwner());			
 			break;
 		default:
 			break;
