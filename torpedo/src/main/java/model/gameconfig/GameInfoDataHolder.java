@@ -68,7 +68,7 @@ public class GameInfoDataHolder {
 	 * @return 
 	 */
 	private static GameInfoDataHolder createNewDataHolder(Gson gsonRef, JsonObject job) {
-		JsonElement jes = job.get("Game");
+		JsonElement jes = job.get("game");
 		
 		GameInfoDataHolder newDataHolder = gsonRef.fromJson(jes, GameInfoDataHolder.class);
 		

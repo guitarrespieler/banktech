@@ -48,7 +48,7 @@ public class Sonar {
 		
 		//URL TAG összeállítása
 		this.URL_TAG = "game/" + this.GameID +
-					"/submarine/" + this.submarineID + "/sonar";
+					"/submarine/" + this.submarineID + "/sonar/";
 		
 		this.gsonRef = gsonObject;
 		
