@@ -164,18 +164,8 @@ public class Communication {
 			throws IOException, ClientProtocolException {
 		HttpResponse response=null;
 		HttpPost httppost = new HttpPost(url);
-		httppost.addHeader("TEAMTOKEN", TEAM_TOKEN);
-		
-		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-		 postParameters.add(new BasicNameValuePair("speed", "1.0"));
-		 postParameters.add(new BasicNameValuePair("turn", "-3.0"));
-		httppost.setEntity(new UrlEncodedFormEntity(postParameters));
-		
-		
-		
-		
-		
-		
+		httppost.addHeader("TEAMTOKEN", TEAM_TOKEN);	
+						
 		 //passes the results to a string builder/entity
 	    StringEntity se = new StringEntity(urlParameters.toString());
 
