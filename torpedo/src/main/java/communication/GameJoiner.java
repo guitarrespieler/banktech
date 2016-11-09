@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
  */
 public class GameJoiner {
 
-	private String URL_TAG = "game";
+	private String URL_TAG = "game/";
 	/**
 	 * A paraméterül kapott ID-jű játékhoz csatlakoztató metódus. Visszatérési értékként megadja az ErrorCode-ot.
 	 * @param gameID

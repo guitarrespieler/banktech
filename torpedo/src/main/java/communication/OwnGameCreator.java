@@ -17,7 +17,7 @@ public class OwnGameCreator {
 	/**
 	 * Ezen a címen érjük el a szerver oldalt.
 	 */
-	private static String URL_TAG = "/game";
+	private static String URL_TAG = "game";
 
 	/**
 	 * Saját játékot hoz létre. Az új játék ID-ját elmenti.
