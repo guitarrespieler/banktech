@@ -39,8 +39,9 @@ public class ControllerMain {
 	}
 
 	public static void main(String[] args) {
-		Communication.mainURL="http://"+args[0]+"/jc16-srv/";
+		
 		ControllerMain cM = new ControllerMain();
+		Communication.mainURL="http://"+args[0]+"/jc16-srv/";
 		try {
 			cM.startGame();
 			cM.refreshAll();

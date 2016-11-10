@@ -2,11 +2,13 @@
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>bme.howhavetimeforlife</groupId>
-  <artifactId>torpedo</artifactId>
+  <artifactId>HowHaveTimeForLife</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>TorpedoGame</name>
   
-  <dependencies>
+
+  
+  	<dependencies>
 	    <!--  Gson: Java to Json conversion -->
 	    <dependency>
 	      <groupId>com.google.code.gson</groupId>
@@ -24,6 +26,41 @@
 	    
 	</dependencies>
 	
+	<build>
+	  <plugins>
+	    <plugin>
+	      <!-- Build an executable JAR -->
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-jar-plugin</artifactId>
+	      <version>3.0.2</version>
+	      <configuration>
+	      	<finalName>HowHaveTimeForLife</finalName>
+	        <archive>
+	          <manifest>
+	            <addClasspath>true</addClasspath>
+	            <classpathPrefix>src/main/java/</classpathPrefix>
+	            <mainClass>Controller.ControllerMain</mainClass>
+	          </manifest>
+	        </archive>
+	      </configuration>
+	    </plugin>
+	    
+	    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+	  </plugins>
+	</build>
 	
 
 </project>

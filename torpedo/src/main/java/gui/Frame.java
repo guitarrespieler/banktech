@@ -29,7 +29,6 @@ import model.gameObjects.entities.EntityDataHolder;
 import model.gameObjects.entities.EntityType;
 import model.gameObjects.entities.SubmarineDataHolder;
 import model.gameconfig.MapConfigDataHolder;
-import torpedoGame.Main;
 
 public class Frame extends JFrame {
 	
